@@ -17,7 +17,7 @@
         <img src="img/icone-negativo.png" width="30px" alt="">
         <h2 class="titulo mt-2">Point Condomínio</h2>
         <div class="mt-3">
-            <img id="bboard" src="img/ace4e715e64d407706b4d027e8ec2.jpg" class="rounded-circle" width="50px" alt="User">
+            <img id="bboard" src="img/ace4e715e64d407706b4d027e8ec2.jpg" class="rounded-circle" width="60px" alt="User">
             <p class="mt-2">Olá, <br><strong>Eric César da Silva Junior</strong></p>
         </div>
     </div>
@@ -52,19 +52,28 @@
 
         <!-- Main Content -->
         <div class="flex-grow-1">
-            <header class="barrasuperior d-flex align-items-center justify-content-between px-3 py-2 bg-light">
-                <div>
-                    <i class="bi bi-list fs-4"></i>
-                    <span class="fs-5 ms-2">Administradora Modelo</span>
+            <header class="barrasuperior d-flex align-items-center justify-content-between px-3 py-2 bg-light shadow-sm">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-list fs-3 ajuste"></i>
+                    <span class="fs-5 ms-2 fw-semibold ajuste">Administradora Modelo</span>
+                    <i class="bi bi-caret-down-fill ms-2 ajuste"></i>
                 </div>
                 <div class="d-flex align-items-center">
-                    <i class="bi bi-globe me-2"></i>
-                    <span>Seu progresso</span>
-                </div>
-                <div>
-                    <span>Eric César da Silva Junior</span>
+                    <div class="progress-circle">
+                        <i class="bi bi-globe text-primary"></i>
+                        <svg class="progress-ring" width="50" height="50">
+                            <circle class="progress-ring__circle" stroke="blue" stroke-width="4" fill="transparent" r="22" cx="25" cy="25" />
+                        </svg>
+                    </div>
+                    <span class="fw-semibold ajuste ms-3">Seu progresso</span>
+                    <i class="bi bi-caret-down-fill ms-2 ajuste"></i>
+                </div>                
+                <div class="d-flex align-items-center">
+                    <span class="fw-semibold me-2">Eric César da Silva Junior</span>
+                    <i class="bi bi-caret-down-fill"></i>
                 </div>
             </header>
+            
             <header class="banner-academia text-white text-center py-4">
                 <h1>Bem-vindo à Academia Point</h1>
                 <p>Criamos uma verdadeira biblioteca de cursos online que irão guiá-lo através dos diversos módulos do sistema Point Condomínio com instruções passo-a-passo e tutoriais em vídeo. Estude onde e quando quiser e no seu próprio ritmo.</p>
@@ -72,12 +81,45 @@
             
             <main class="container my-5">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Cursos Disponíveis</h2>
+                    <h2>Tipos de Treinamentos</h2>
                     <input type="text" class="form-control w-50" id="search-courses" placeholder="Buscar cursos...">
                 </div>
+                
                 <div class="row" id="courses-container">
-                    <!-- Cursos carregados via JavaScript -->
+                    <!-- Card para Módulo Financeiro -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card training-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Módulo Financeiro</h5>
+                                <button class="btn btn-primary btn-sm toggle-options" data-target="finance-options">
+                                    Ver Treinamentos
+                                </button>
+                                <ul class="training-options mt-3" id="finance-options" style="display: none;">
+                                    <li>Contas a Pagar</li>
+                                    <li>Contas a Receber</li>
+                                    <li>Controle de Transferências</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Card para outro tipo de treinamento -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card training-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Módulo Operacional</h5>
+                                <button class="btn btn-primary btn-sm toggle-options" data-target="operational-options">
+                                    Ver Treinamentos
+                                </button>
+                                <ul class="training-options mt-3" id="operational-options" style="display: none;">
+                                    <li>Gestão de Estoque</li>
+                                    <li>Relatórios Operacionais</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
 
                 <!-- FAQ Section -->
                 <section class="faq-section">

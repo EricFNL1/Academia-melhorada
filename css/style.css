@@ -11,12 +11,13 @@ nav {
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    transition: transform 0.2s ease;
 }
 
 .course-card:hover {
     transform: scale(1.05);
 }
+
 
 .course-card img {
     width: 100%;
@@ -63,16 +64,33 @@ nav {
     background-color:  #2a3f54;
 }
 
-.barrasuperior{
-    background-color: #ededed;
+.barrasuperior {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
 }
 
-.barrasuperior {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.barrasuperior i {
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
+
+.barrasuperior i:hover {
+    color: #0d6efd;
+}
+
+.barrasuperior .fw-semibold {
+    font-weight: 500;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 
 .banner-academia {
-    background: url('https://via.placeholder.com/1920x300') no-repeat center center;
+    background: url('https://img.freepik.com/free-photo/business-women-signature-document_1388-90.jpg?t=st=1738350007~exp=1738353607~hmac=e8a09a531d919fd0c5ff7e886fc08ac7dfecce518d4327d8f5a248db35226d75&w=1380') no-repeat center center;
     background-size: cover;
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
 }
@@ -127,3 +145,85 @@ nav img {
     margin-bottom: 20px;
     letter-spacing: 0.05rem;
 }
+
+.ajuste{
+    color: #5a738e
+}
+
+
+.progress-circle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+.progress-circle i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem; /* Tamanho do ícone */
+    z-index: 1;
+}
+
+.progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg); /* Inicia no topo */
+    z-index: 0;
+}
+
+.progress-ring__circle {
+    stroke-dasharray: 138; /* Circunferência = 2 * PI * raio */
+    stroke-dashoffset: 40; /* Ajuste o progresso aqui */
+    transition: stroke-dashoffset 0.5s ease; /* Animação do progresso */
+}
+
+.training-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.training-card:hover {
+    transform: scale(1.03);
+}
+
+.training-image {
+    max-width: 100%; /* Limita a largura da imagem */
+    max-height: 200px; /* Limita a altura da imagem */
+    object-fit: cover; /* Ajusta a imagem dentro do espaço definido */
+}
+
+.training-options {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    display: none; /* Inicialmente oculto */
+}
+
+.training-options li {
+    padding: 5px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.training-options li:hover {
+    background-color: #f8f9fa;
+}
+
+
+.training-options a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.training-options a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
