@@ -90,7 +90,7 @@ nav {
 
 
 .banner-academia {
-    background: url('https://img.freepik.com/free-photo/business-women-signature-document_1388-90.jpg?t=st=1738350007~exp=1738353607~hmac=e8a09a531d919fd0c5ff7e886fc08ac7dfecce518d4327d8f5a248db35226d75&w=1380') no-repeat center center;
+    background: url('https://img.freepik.com/free-photo/business-women-signature-document_1388-90.jpg?') no-repeat center center;
     background-size: cover;
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
 }
@@ -217,13 +217,26 @@ nav img {
 }
 
 
-.training-options a {
-    color: #007bff;
-    text-decoration: none;
+.training-options .training-button {
+    width: 100%; /* Botões ocupam toda a largura */
+    text-align: left;
+    border-radius: 5px;
 }
 
-.training-options a:hover {
-    text-decoration: underline;
-    color: #0056b3;
+.training-options .training-button:hover {
+    background-color: #007bff; /* Cor de fundo no hover */
+    color: white; /* Texto branco no hover */
+}
+
+.training-options .training-button:active {
+    background-color: #0056b3; /* Cor de fundo ao clicar */
+}
+
+.no-link {
+    text-decoration: none; /* Remove o sublinhado */
+}
+
+.no-link:hover {
+    text-decoration: none; /* Garante que o hover não traga o sublinhado */
 }
 
