@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia Point - Melhorada</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav class="bg-dark text-white p-3" style="width: 250px; min-height: 100vh;">
+            <h2 class="text-center">Point Condomínio</h2>
+            <ul class="nav flex-column mt-4">
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white"><i class="bi bi-shield-lock"></i> Segurança</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white"><i class="bi bi-browser-chrome"></i> Website</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white"><i class="bi bi-envelope"></i> Comunicação</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white"><i class="bi bi-people"></i> Módulos de Convivência</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white"><i class="bi bi-question-circle"></i> FAQ</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <header class="bg-primary text-white text-center py-4">
+                <h1>Bem-vindo à Academia Point</h1>
+                <p>Aprenda de forma simples e interativa com nossos cursos online.</p>
+            </header>
+
+            <main class="container my-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Cursos Disponíveis</h2>
+                    <input type="text" class="form-control w-50" id="search-courses" placeholder="Buscar cursos...">
+                </div>
+                <div class="row" id="courses-container">
+                    <!-- Cursos carregados via JavaScript -->
+                </div>
+
+                <!-- FAQ Section -->
+                <section class="faq-section">
+                    <h2>Perguntas Frequentes</h2>
+                    <div class="faq-item">
+                        <div class="faq-question">Como acessar os cursos?</div>
+                        <div class="faq-answer">Você pode acessar os cursos clicando no botão "Iniciar" nos cards acima.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Posso assistir aos cursos no celular?</div>
+                        <div class="faq-answer">Sim, a Academia Point é responsiva e pode ser acessada de qualquer dispositivo.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Os cursos são gratuitos?</div>
+                        <div class="faq-answer">Sim, todos os cursos são gratuitos para os usuários do sistema.</div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

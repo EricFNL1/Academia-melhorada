@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.course-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.course-card:hover {
+    transform: scale(1.05);
+}
+
+.course-card img {
+    width: 100%;
+    height: auto;
+}
+
+.course-card .btn {
+    width: 100%;
+}
+
+.faq-section {
+    margin-top: 50px;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.faq-item .faq-question {
+    background-color: #f8f9fa;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.faq-item .faq-answer {
+    display: none;
+    padding: 15px;
+    background-color: #ffffff;
+}
+
+.faq-item.open .faq-answer {
+    display: block;
+}
