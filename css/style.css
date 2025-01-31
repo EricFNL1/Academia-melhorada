@@ -54,3 +54,76 @@ nav {
 .faq-item.open .faq-answer {
     display: block;
 }
+
+.titulo{
+    font-size: 16px;
+}
+
+.bg{
+    background-color:  #2a3f54;
+}
+
+.barrasuperior{
+    background-color: #ededed;
+}
+
+.barrasuperior {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.banner-academia {
+    background: url('https://via.placeholder.com/1920x300') no-repeat center center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
+}
+
+.banner-academia h1 {
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+.banner-academia p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.titulo {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+nav img {
+    margin-bottom: 10px;
+}
+
+#bboard{
+    border: 3px solid #ffffff; /* Borda branca */
+    border-radius: 50%; /* Garante que a borda permaneça circular */
+}
+
+.nav-link {
+    padding: 10px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.text-uppercase {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 0.05rem;
+}
