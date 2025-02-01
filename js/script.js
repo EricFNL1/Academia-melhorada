@@ -52,6 +52,15 @@ document.addEventListener("DOMContentLoaded", function () {
         currentPage = page; // Atualiza a página atual
     }
 
+    faqItems.forEach((item) => {
+        const question = item.querySelector(".faq-question");
+    
+        // Adiciona interatividade para exibir/ocultar respostas
+        question.addEventListener("click", () => {
+            item.classList.toggle("open"); // Adiciona/remove a classe 'open'
+        });
+    });
+
     // Função para filtrar FAQs
     function filterFAQs(searchTerm) {
         const filteredFAQs = [...faqItems].filter((item) => {
@@ -65,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         renderFAQs(1, filteredFAQs); // Renderiza a página inicial das FAQs filtradas
     }
+    
 
     // Função para filtrar treinamentos
     function renderTrainings(trainings, searchTerm = "") {
