@@ -12,42 +12,53 @@
 <body>
     <div class="d-flex">
        <!-- Sidebar -->
-<nav class="bg text-white p-3" style="width: 250px; min-height: 100vh;">
-    <div class="text-center mb-4">
-        <img src="img/icone-negativo.png" width="30px" alt="">
-        <h2 class="titulo mt-2">Point Condomínio</h2>
-        <div class="mt-3">
-            <img id="bboard" src="img/ace4e715e64d407706b4d027e8ec2.jpg" class="rounded-circle" width="60px" alt="User">
-            <p class="mt-2">Olá, <br><strong>Eric César da Silva Junior</strong></p>
+<nav class="bg text-white d-flex flex-column justify-content-between" style="width: 250px; min-height: 100vh;">
+    <!-- Conteúdo superior -->
+    <div>
+        <div class="text-center mb-4 mt-2">
+            <img src="img/icone-negativo.png" width="30px" alt="">
+            <h2 class="titulo mt-2">Point Condomínio</h2>
+            <div class="mt-3">
+                <img id="bboard" src="img/ace4e715e64d407706b4d027e8ec2.jpg" class="rounded-circle" width="60px" alt="User">
+                <p class="mt-2">Olá, <br><strong>Eric César da Silva Junior</strong></p>
+            </div>
         </div>
+        <p class="text-uppercase text-secondary text-center">Menu Principal</p>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-shield-lock"></i> Segurança</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-browser-chrome"></i> Website</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-envelope"></i> Comunicação</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-people"></i> Cadastros Gerais</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-book"></i> Módulos de Convivência</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-pencil"></i> Assinatura Digital</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-currency-dollar"></i> Módulo Financeiro</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white"><i class="bi bi-star"></i> Academia Point</a>
+            </li>
+        </ul>
     </div>
-    <p class="text-uppercase text-secondary text-center">Menu Principal</p>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-shield-lock"></i> Segurança</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-browser-chrome"></i> Website</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-envelope"></i> Comunicação</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-people"></i> Cadastros Gerais</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-book"></i> Módulos de Convivência</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-pencil"></i> Assinatura Digital</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-currency-dollar"></i> Módulo Financeiro</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white"><i class="bi bi-star"></i> Academia Point</a>
-        </li>
-    </ul>
+
+    <!-- Guia inferior -->
+    <div class="fixed-bottom d-flex justify-content-around align-items-center py-3" 
+    style="border-top: 1px solid rgba(255, 255, 255, 0.2); background-color: #2B3E50; width: 250px;">
+   <a href="#" class="text-white"><i class="bi bi-house-door-fill"></i></a>
+   <a href="#" class="text-white"><i class="bi bi-arrows-fullscreen"></i></a>
+   <a href="#" class="text-white"><i class="bi bi-power"></i></a>
+</div>
 </nav>
 
         <!-- Main Content -->
@@ -82,7 +93,7 @@
             <main class="container my-5">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Tipos de Treinamentos</h2>
-                    <input type="text" class="form-control w-50" id="search-courses" placeholder="Buscar cursos...">
+                    <input type="text" class="form-control w-50" id="search-courses" placeholder="Buscar cursos ou repostas...">
                 </div>
                 
                 <div class="row" id="courses-container">
@@ -121,23 +132,47 @@
                 </div>
                 
 
-                <!-- FAQ Section -->
-                <section class="faq-section">
-                    <section class="faq-section">
-                        <h2>Perguntas Frequentes</h2>
-                        <div class="faq-item">
-                            <div class="faq-question">Como acessar os cursos?</div>
-                            <div class="faq-answer">Você pode acessar os cursos clicando no botão "Iniciar" nos cards acima.</div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Posso assistir aos cursos no celular?</div>
-                            <div class="faq-answer">Sim, a Academia Point é responsiva e pode ser acessada de qualquer dispositivo.</div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">Os cursos são gratuitos?</div>
-                            <div class="faq-answer">Sim, todos os cursos são gratuitos para os usuários do sistema.</div>
-                        </div>
-                    </section>
+              <!-- FAQ Section -->
+<section class="faq-section">
+    <h2>Perguntas Frequentes</h2>
+    <div class="faq-item">
+        <div class="faq-question">Por que meus boletos não estão sendo registrados?</div>
+        <div class="faq-answer">
+            Se os boletos não estão sendo registrados, siga estas etapas para identificar o problema:
+            <ul>
+                <li>Verifique se os dados do usuário da unidade associada ao boleto estão corretos.</li>
+                <li>Confirme se o CPF do usuário está válido e cadastrado corretamente.</li>
+                <li>Garanta que o endereço da unidade está completo e atualizado no sistema.</li>
+                <li>Caso o problema persista, entre em contato com o suporte técnico para análise mais detalhada.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Por que alguns condomínios não aparecem para mim?</div>
+        <div class="faq-answer">
+            Se você não está visualizando todos os condomínios esperados, siga estas orientações:
+            <ul>
+                <li>Acesse o módulo <strong>Segurança</strong> e vá para a opção <strong>Incluir Usuários</strong>.</li>
+                <li>No perfil do seu usuário, verifique se há algum condomínio selecionado na aba de condomínios.</li>
+                <li>Se houver seleções, remova todas, salve as alterações e volte à tela inicial para verificar se os condomínios estão visíveis.</li>
+                <li>Certifique-se de que as permissões de acesso aos condomínios estão configuradas corretamente.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Por que estou enfrentando problemas visuais no sistema?</div>
+        <div class="faq-answer">
+            Problemas visuais no sistema podem ocorrer devido a atualizações do navegador ou ao armazenamento de informações desatualizadas no cache. Siga estas etapas para solucionar:
+            <ul>
+                <li>Pressione as teclas <strong>CTRL + F5</strong> para limpar o cache da página e recarregar os dados mais recentes do sistema.</li>
+                <li>Verifique se o navegador que você está utilizando é compatível com o sistema.</li>
+                <li>Certifique-se de que seu navegador está atualizado para a versão mais recente.</li>
+                <li>Se o problema persistir, entre em contato com o suporte técnico para assistência adicional.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
                     
             </main>
         </div>
