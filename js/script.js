@@ -58,6 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Adiciona interatividade para exibir/ocultar respostas
         question.addEventListener("click", () => {
             item.classList.toggle("open"); // Adiciona/remove a classe 'open'
+            const answer = item.querySelector(".faq-answer");
+            answer.style.display = item.classList.contains("open") ? "block" : "none";
         });
     });
 
@@ -73,8 +75,17 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         renderFAQs(1, filteredFAQs); // Renderiza a página inicial das FAQs filtradas
+        return filteredFAQs;
     }
-    
+
+    // Função para retração automática após limpar a busca
+    function closeAllFAQs() {
+        faqItems.forEach((item) => {
+            item.classList.remove("open");
+            const answer = item.querySelector(".faq-answer");
+            answer.style.display = "none";
+        });
+    }
 
     // Função para filtrar treinamentos
     function renderTrainings(trainings, searchTerm = "") {
@@ -137,6 +148,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Filtrar treinamentos e FAQs
         renderTrainings(trainingTypes, searchTerm);
-        filterFAQs(searchTerm);
+
+        const filteredFAQs = filterFAQs(searchTerm);
+
+        // Retrair todas as FAQs se a busca estiver vazia
+        if (searchTerm === "") {
+            closeAllFAQs();
+        }
+
+        // Renderizar FAQs filtradas
+        if (filteredFAQs.length === 0 && searchTerm === "") {
+            renderFAQs();
+        }
     });
 });
