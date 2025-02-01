@@ -120,4 +120,39 @@ document.addEventListener("DOMContentLoaded", function () {
         renderTrainings(trainingTypes, searchTerm);
         filterFAQs(searchTerm);
     });
+
+    const faqs = document.querySelectorAll(".faq-item");
+    const itemsPerPage = 3;
+    let currentPage = 1;
+
+    function renderPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        faqs.forEach((faq, index) => {
+            faq.style.display = index >= start && index < end ? "block" : "none";
+        });
+
+        // Atualiza os botões
+        document.getElementById("prev-btn").disabled = page === 1;
+        document.getElementById("next-btn").disabled = end >= faqs.length;
+    }
+
+    // Eventos dos botões de paginação
+    document.getElementById("prev-btn").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    });
+
+    document.getElementById("next-btn").addEventListener("click", () => {
+        if (currentPage * itemsPerPage < faqs.length) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    });
+
+    // Renderiza a primeira página
+    renderPage(currentPage);
 });
