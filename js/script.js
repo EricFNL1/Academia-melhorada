@@ -32,33 +32,41 @@ document.addEventListener("DOMContentLoaded", function () {
     const faqItems = document.querySelectorAll(".faq-item");
 
     // Função para renderizar os tipos de treinamento
-    function renderTrainings(trainings) {
+    function renderTrainings(trainings, searchTerm = "") {
         container.innerHTML = ""; // Limpa o container
         trainings.forEach((type) => {
-            const cardElement = document.createElement("div");
-            cardElement.classList.add("col-md-4", "mb-4");
-            cardElement.innerHTML = `
-                <div class="card course-card">
-                    <img src="${type.image}" alt="${type.title}" class="card-img-top training-image">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">${type.title}</h5>
-                        <button class="btn btn-primary btn-sm toggle-options">
-                            Ver Treinamentos
-                        </button>
-                        <div class="training-options mt-3" style="display: none;">
-                            ${type.trainings
-                                .map(
-                                    (training) =>
-                                        `<button class="btn btn-outline-primary btn-sm btn-block mb-2 training-button" onclick="window.location.href='${training.link}'">
-                                            ${training.name}
-                                        </button>`
-                                )
-                                .join("")}
+            const filteredTrainings = type.trainings.filter((training) =>
+                training.name.toLowerCase().includes(searchTerm)
+            );
+
+            // Exibe o card apenas se houver resultados filtrados ou se não houver filtro
+            if (filteredTrainings.length > 0 || searchTerm === "") {
+                const cardElement = document.createElement("div");
+                cardElement.classList.add("col-md-4", "mb-4");
+                const isExpanded = filteredTrainings.length > 0 && searchTerm !== "";
+                cardElement.innerHTML = `
+                    <div class="card course-card">
+                        <img src="${type.image}" alt="${type.title}" class="card-img-top training-image">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">${type.title}</h5>
+                            <button class="btn btn-primary btn-sm toggle-options">
+                                ${isExpanded ? "Fechar Treinamentos" : "Ver Treinamentos"}
+                            </button>
+                            <div class="training-options mt-3" style="display: ${isExpanded ? "block" : "none"};">
+                                ${filteredTrainings
+                                    .map(
+                                        (training) =>
+                                            `<button class="btn btn-outline-primary btn-sm btn-block mb-2 training-button" onclick="window.location.href='${training.link}'">
+                                                ${training.name}
+                                            </button>`
+                                    )
+                                    .join("")}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            container.appendChild(cardElement);
+                `;
+                container.appendChild(cardElement);
+            }
         });
 
         // Adiciona interatividade aos botões "Ver Treinamentos"
@@ -82,6 +90,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Renderiza os treinamentos inicialmente
     renderTrainings(trainingTypes);
 
+    faqItems.forEach((item) => {
+        const question = item.querySelector(".faq-question");
+    
+        // Adiciona interatividade para exibir/ocultar respostas
+        question.addEventListener("click", () => {
+            item.classList.toggle("open"); // Adiciona/remove a classe 'open'
+        });
+    });
+
     // Função para filtrar FAQs
     function filterFAQs(searchTerm) {
         faqItems.forEach((item) => {
@@ -99,16 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
     searchInput.addEventListener("input", function () {
         const searchTerm = this.value.toLowerCase();
 
-        // Filtrar treinamentos
-        const filteredTrainings = trainingTypes.filter((type) =>
-            type.title.toLowerCase().includes(searchTerm) ||
-            type.trainings.some((training) =>
-                training.name.toLowerCase().includes(searchTerm)
-            )
-        );
-        renderTrainings(filteredTrainings);
-
-        // Filtrar FAQs
+        // Filtrar treinamentos e FAQs
+        renderTrainings(trainingTypes, searchTerm);
         filterFAQs(searchTerm);
     });
 });
