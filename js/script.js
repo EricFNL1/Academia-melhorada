@@ -4,16 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
             title: "Módulo Financeiro",
             image: "https://img.freepik.com/free-photo/digital-graph-performance-with-businessman-hand-overlay_53876-101943.jpg?uid=R180807379&ga=GA1.1.728869221.1720634505&semt=ais_hybrid",
             trainings: [
-                { name: "Contas a Pagar", link: "#" },
+                { name: "Contas a Pagar", link: "contas-a-pagar.html" },
                 { name: "Contas a Receber", link: "contasareceber.html" },
-                { name: "Controle de Transferências", link: "#" },
+                { name: "Controle de Transferências", link: "controle-de-transferencias.html" },
             ],
         },
         {
             title: "Cadastros Gerais",
             image: "https://img.freepik.com/free-photo/form-business-exam-comparison-option_1232-3835.jpg?t=st=1738351677~exp=1738355277~hmac=4b29133c0d1d1ba7779b978dd49b7e1999003c016fbc3f6bf09bf5a7c16691d3&w=1380",
             trainings: [
-                { name: "Cadastrar Fornecedores", link: "#" },
+                { name: "Cadastrar Fornecedores", link: "fornecedores.html" },
                 { name: "Cadastrar Condomínios", link: "#" },
             ],
         },
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             image: "https://img.freepik.com/free-photo/paper-dolls-against-sky_23-2148144531.jpg?uid=R180807379&ga=GA1.1.728869221.1720634505&semt=ais_hybrid",
             trainings: [
                 { name: "Reserva de Áreas", link: "#" },
-                { name: "Quadro de Avisos", link: "#" },
+                { name: "Quadro de Avisos", link: "quadro-de-avisos.html" },
             ],
         },
     ];
