@@ -30,8 +30,43 @@ document.addEventListener("DOMContentLoaded", function () {
     const container = document.getElementById("courses-container");
     const searchInput = document.getElementById("search-courses");
     const faqItems = document.querySelectorAll(".faq-item");
+    const itemsPerPage = 3;
+    let currentPage = 1;
 
-    // Função para renderizar os tipos de treinamento
+    // Função para renderizar FAQs por página
+    function renderFAQs(page = 1, filteredFAQs = faqItems) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        faqItems.forEach((faq) => (faq.style.display = "none")); // Oculta todas as FAQs
+        filteredFAQs.forEach((faq, index) => {
+            if (index >= start && index < end) {
+                faq.style.display = "block";
+            }
+        });
+
+        // Atualiza os botões de paginação
+        document.getElementById("prev-btn").disabled = page === 1;
+        document.getElementById("next-btn").disabled = end >= filteredFAQs.length;
+
+        currentPage = page; // Atualiza a página atual
+    }
+
+    // Função para filtrar FAQs
+    function filterFAQs(searchTerm) {
+        const filteredFAQs = [...faqItems].filter((item) => {
+            const question = item.querySelector(".faq-question").textContent.toLowerCase();
+            const answer = item.querySelector(".faq-answer").textContent.toLowerCase();
+            const match = question.includes(searchTerm) || answer.includes(searchTerm);
+            item.classList.toggle("open", match); // Abre automaticamente as respostas correspondentes
+            item.querySelector(".faq-answer").style.display = match ? "block" : "none";
+            return match;
+        });
+
+        renderFAQs(1, filteredFAQs); // Renderiza a página inicial das FAQs filtradas
+    }
+
+    // Função para filtrar treinamentos
     function renderTrainings(trainings, searchTerm = "") {
         container.innerHTML = ""; // Limpa o container
         trainings.forEach((type) => {
@@ -39,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 training.name.toLowerCase().includes(searchTerm)
             );
 
-            // Exibe o card apenas se houver resultados filtrados ou se não houver filtro
             if (filteredTrainings.length > 0 || searchTerm === "") {
                 const cardElement = document.createElement("div");
                 cardElement.classList.add("col-md-4", "mb-4");
@@ -68,49 +102,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 container.appendChild(cardElement);
             }
         });
-
-        // Adiciona interatividade aos botões "Ver Treinamentos"
-        const toggleButtons = document.querySelectorAll(".toggle-options");
-        toggleButtons.forEach((button) => {
-            button.addEventListener("click", function () {
-                const options = this.nextElementSibling; // Seleciona a lista de treinamentos
-                const isExpanded = this.textContent === "Fechar Treinamentos";
-
-                if (!isExpanded) {
-                    options.style.display = "block";
-                    this.textContent = "Fechar Treinamentos";
-                } else {
-                    options.style.display = "none";
-                    this.textContent = "Ver Treinamentos";
-                }
-            });
-        });
     }
 
-    // Renderiza os treinamentos inicialmente
+    // Renderiza os treinamentos e FAQs inicialmente
     renderTrainings(trainingTypes);
+    renderFAQs();
 
-    faqItems.forEach((item) => {
-        const question = item.querySelector(".faq-question");
-    
-        // Adiciona interatividade para exibir/ocultar respostas
-        question.addEventListener("click", () => {
-            item.classList.toggle("open"); // Adiciona/remove a classe 'open'
-        });
+    // Adiciona eventos aos botões de paginação
+    document.getElementById("prev-btn").addEventListener("click", () => {
+        if (currentPage > 1) {
+            renderFAQs(currentPage - 1);
+        }
     });
 
-    // Função para filtrar FAQs
-    function filterFAQs(searchTerm) {
-        faqItems.forEach((item) => {
-            const question = item.querySelector(".faq-question").textContent.toLowerCase();
-            const answer = item.querySelector(".faq-answer").textContent.toLowerCase();
-            if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                item.style.display = "block";
-            } else {
-                item.style.display = "none";
-            }
-        });
-    }
+    document.getElementById("next-btn").addEventListener("click", () => {
+        if (currentPage * itemsPerPage < faqItems.length) {
+            renderFAQs(currentPage + 1);
+        }
+    });
 
     // Evento de busca
     searchInput.addEventListener("input", function () {
@@ -120,39 +129,4 @@ document.addEventListener("DOMContentLoaded", function () {
         renderTrainings(trainingTypes, searchTerm);
         filterFAQs(searchTerm);
     });
-
-    const faqs = document.querySelectorAll(".faq-item");
-    const itemsPerPage = 3;
-    let currentPage = 1;
-
-    function renderPage(page) {
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-
-        faqs.forEach((faq, index) => {
-            faq.style.display = index >= start && index < end ? "block" : "none";
-        });
-
-        // Atualiza os botões
-        document.getElementById("prev-btn").disabled = page === 1;
-        document.getElementById("next-btn").disabled = end >= faqs.length;
-    }
-
-    // Eventos dos botões de paginação
-    document.getElementById("prev-btn").addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderPage(currentPage);
-        }
-    });
-
-    document.getElementById("next-btn").addEventListener("click", () => {
-        if (currentPage * itemsPerPage < faqs.length) {
-            currentPage++;
-            renderPage(currentPage);
-        }
-    });
-
-    // Renderiza a primeira página
-    renderPage(currentPage);
 });
