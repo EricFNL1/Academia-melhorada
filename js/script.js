@@ -33,61 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const itemsPerPage = 3;
     let currentPage = 1;
 
-    // Função para renderizar FAQs por página
-    function renderFAQs(page = 1, filteredFAQs = faqItems) {
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-
-        faqItems.forEach((faq) => (faq.style.display = "none")); // Oculta todas as FAQs
-        filteredFAQs.forEach((faq, index) => {
-            if (index >= start && index < end) {
-                faq.style.display = "block";
-            }
-        });
-
-        // Atualiza os botões de paginação
-        document.getElementById("prev-btn").disabled = page === 1;
-        document.getElementById("next-btn").disabled = end >= filteredFAQs.length;
-
-        currentPage = page; // Atualiza a página atual
-    }
-
-    faqItems.forEach((item) => {
-        const question = item.querySelector(".faq-question");
-    
-        // Adiciona interatividade para exibir/ocultar respostas
-        question.addEventListener("click", () => {
-            item.classList.toggle("open"); // Adiciona/remove a classe 'open'
-            const answer = item.querySelector(".faq-answer");
-            answer.style.display = item.classList.contains("open") ? "block" : "none";
-        });
-    });
-
-    // Função para filtrar FAQs
-    function filterFAQs(searchTerm) {
-        const filteredFAQs = [...faqItems].filter((item) => {
-            const question = item.querySelector(".faq-question").textContent.toLowerCase();
-            const answer = item.querySelector(".faq-answer").textContent.toLowerCase();
-            const match = question.includes(searchTerm) || answer.includes(searchTerm);
-            item.classList.toggle("open", match); // Abre automaticamente as respostas correspondentes
-            item.querySelector(".faq-answer").style.display = match ? "block" : "none";
-            return match;
-        });
-
-        renderFAQs(1, filteredFAQs); // Renderiza a página inicial das FAQs filtradas
-        return filteredFAQs;
-    }
-
-    // Função para retração automática após limpar a busca
-    function closeAllFAQs() {
-        faqItems.forEach((item) => {
-            item.classList.remove("open");
-            const answer = item.querySelector(".faq-answer");
-            answer.style.display = "none";
-        });
-    }
-
-    // Função para filtrar treinamentos
+    // Função para renderizar treinamentos
     function renderTrainings(trainings, searchTerm = "") {
         container.innerHTML = ""; // Limpa o container
         trainings.forEach((type) => {
@@ -95,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 training.name.toLowerCase().includes(searchTerm)
             );
 
+            // Exibe o card apenas se houver resultados filtrados ou se não houver filtro
             if (filteredTrainings.length > 0 || searchTerm === "") {
                 const cardElement = document.createElement("div");
                 cardElement.classList.add("col-md-4", "mb-4");
@@ -122,6 +69,77 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
                 container.appendChild(cardElement);
             }
+        });
+
+        // Adiciona interatividade aos botões "Ver Treinamentos"
+        const toggleButtons = document.querySelectorAll(".toggle-options");
+        toggleButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                const options = this.nextElementSibling; // Seleciona a lista de treinamentos
+                const isExpanded = this.textContent === "Fechar Treinamentos";
+
+                if (!isExpanded) {
+                    options.style.display = "block";
+                    this.textContent = "Fechar Treinamentos";
+                } else {
+                    options.style.display = "none";
+                    this.textContent = "Ver Treinamentos";
+                }
+            });
+        });
+    }
+
+    // Renderiza FAQs
+    function renderFAQs(page = 1, filteredFAQs = faqItems) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        faqItems.forEach((faq) => (faq.style.display = "none")); // Oculta todas as FAQs
+        filteredFAQs.forEach((faq, index) => {
+            if (index >= start && index < end) {
+                faq.style.display = "block";
+            }
+        });
+
+        // Atualiza os botões de paginação
+        document.getElementById("prev-btn").disabled = page === 1;
+        document.getElementById("next-btn").disabled = end >= filteredFAQs.length;
+
+        currentPage = page; // Atualiza a página atual
+    }
+
+    faqItems.forEach((item) => {
+        const question = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+    
+        // Adiciona interatividade para exibir/ocultar respostas
+        question.addEventListener("click", () => {
+            item.classList.toggle("open");
+            answer.style.display = item.classList.contains("open") ? "block" : "none";
+        });
+    });
+
+    // Função para filtrar FAQs
+    function filterFAQs(searchTerm) {
+        const filteredFAQs = [...faqItems].filter((item) => {
+            const question = item.querySelector(".faq-question").textContent.toLowerCase();
+            const answer = item.querySelector(".faq-answer").textContent.toLowerCase();
+            const match = question.includes(searchTerm) || answer.includes(searchTerm);
+            item.classList.toggle("open", match); // Abre automaticamente as respostas correspondentes
+            item.querySelector(".faq-answer").style.display = match ? "block" : "none";
+            return match;
+        });
+
+        renderFAQs(1, filteredFAQs); // Renderiza a página inicial das FAQs filtradas
+        return filteredFAQs;
+    }
+
+    // Função para retração automática após limpar a busca
+    function closeAllFAQs() {
+        faqItems.forEach((item) => {
+            item.classList.remove("open");
+            const answer = item.querySelector(".faq-answer");
+            answer.style.display = "none";
         });
     }
 
