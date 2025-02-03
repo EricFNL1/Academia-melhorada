@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const trainingTypes = [
         {
             title: "Módulo Financeiro",
-            image: "https://img.freepik.com/free-photo/close-up-businessman-with-digital-tablet_1098-549.jpg?",
+            image: "https://img.freepik.com/free-photo/businesswoman-using-tablet-analysis-graph-company-finance-strategy-statistics-success-concept-planning-future-office-room_74952-1410.jpg?",
             trainings: [
                 { name: "Contas a Pagar", link: "contas-a-pagar.html" },
                 { name: "Contas a Receber", link: "contasareceber.html" },
