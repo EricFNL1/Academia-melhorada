@@ -49,7 +49,7 @@ function renderTrainings(trainings, searchTerm = "") {
         // Exibe o card apenas se houver resultados filtrados ou se não houver filtro
         if (filteredTrainings.length > 0 || searchTerm === "") {
             const cardElement = document.createElement("div");
-            cardElement.classList.add("col-md-4", "mb-4");
+            cardElement.classList.add("col-md-4");
             const isExpanded = filteredTrainings.length > 0 && searchTerm !== "";
             cardElement.innerHTML = `
                 <div class="card course-card">
