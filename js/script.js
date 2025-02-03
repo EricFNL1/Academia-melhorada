@@ -36,61 +36,68 @@ document.addEventListener("DOMContentLoaded", function () {
     const itemsPerPage = 3;
     let currentPage = 1;
 
-    // Função para renderizar treinamentos
-    function renderTrainings(trainings, searchTerm = "") {
-        container.innerHTML = ""; // Limpa o container
-        trainings.forEach((type) => {
-            const filteredTrainings = type.trainings.filter((training) =>
-                training.name.toLowerCase().includes(searchTerm)
-            );
+// Verifica os treinamentos concluídos no localStorage
+const completedTrainings = JSON.parse(localStorage.getItem("completedTrainings")) || [];
 
-            // Exibe o card apenas se houver resultados filtrados ou se não houver filtro
-            if (filteredTrainings.length > 0 || searchTerm === "") {
-                const cardElement = document.createElement("div");
-                cardElement.classList.add("col-md-4", "mb-4");
-                const isExpanded = filteredTrainings.length > 0 && searchTerm !== "";
-                cardElement.innerHTML = `
-                    <div class="card course-card">
-                        <img src="${type.image}" alt="${type.title}" class="card-img-top training-image">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">${type.title}</h5>
-                            <button class="btn btn-primary btn-sm toggle-options">
-                                ${isExpanded ? "Fechar Treinamentos" : "Ver Treinamentos"}
-                            </button>
-                            <div class="training-options mt-3 scrollable-list" style="display: ${isExpanded ? "block" : "none"};">
-                                ${filteredTrainings
-                                    .map(
-                                        (training) =>
-                                            `<button class="btn btn-outline-primary btn-sm btn-block mb-2 training-button" onclick="window.location.href='${training.link}'">
-                                                ${training.name}
-                                            </button>`
-                                    )
-                                    .join("")}
-                            </div>
+function renderTrainings(trainings, searchTerm = "") {
+    container.innerHTML = ""; // Limpa o container
+    trainings.forEach((type) => {
+        const filteredTrainings = type.trainings.filter((training) =>
+            training.name.toLowerCase().includes(searchTerm)
+        );
+
+        // Exibe o card apenas se houver resultados filtrados ou se não houver filtro
+        if (filteredTrainings.length > 0 || searchTerm === "") {
+            const cardElement = document.createElement("div");
+            cardElement.classList.add("col-md-4", "mb-4");
+            const isExpanded = filteredTrainings.length > 0 && searchTerm !== "";
+            cardElement.innerHTML = `
+                <div class="card course-card">
+                    <img src="${type.image}" alt="${type.title}" class="card-img-top training-image">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">${type.title}</h5>
+                        <button class="btn btn-primary btn-sm toggle-options">
+                            ${isExpanded ? "Fechar Treinamentos" : "Ver Treinamentos"}
+                        </button>
+                        <div class="training-options mt-3 scrollable-list" style="display: ${isExpanded ? "block" : "none"};">
+                            ${filteredTrainings
+                                .map(
+                                    (training) =>
+                                        `<button 
+                                            class="btn ${completedTrainings.includes(training.name) ? "btn-success" : "btn-outline-primary"} 
+                                                   btn-sm btn-block mb-2 training-button" 
+                                            data-training="${training.name}" 
+                                            onclick="window.location.href='${training.link}'">
+                                            ${training.name} ${completedTrainings.includes(training.name) ? "✔" : ""}
+                                        </button>`
+                                )
+                                .join("")}
                         </div>
                     </div>
-                `;
-                container.appendChild(cardElement);
+                </div>
+            `;
+            container.appendChild(cardElement);
+        }
+    });
+
+    // Adiciona interatividade aos botões "Ver Treinamentos"
+    const toggleButtons = document.querySelectorAll(".toggle-options");
+    toggleButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const options = this.nextElementSibling; // Seleciona a lista de treinamentos
+            const isExpanded = this.textContent === "Fechar Treinamentos";
+
+            if (!isExpanded) {
+                options.style.display = "block";
+                this.textContent = "Fechar Treinamentos";
+            } else {
+                options.style.display = "none";
+                this.textContent = "Ver Treinamentos";
             }
         });
+    });
+}
 
-        // Adiciona interatividade aos botões "Ver Treinamentos"
-        const toggleButtons = document.querySelectorAll(".toggle-options");
-        toggleButtons.forEach((button) => {
-            button.addEventListener("click", function () {
-                const options = this.nextElementSibling; // Seleciona a lista de treinamentos
-                const isExpanded = this.textContent === "Fechar Treinamentos";
-
-                if (!isExpanded) {
-                    options.style.display = "block";
-                    this.textContent = "Fechar Treinamentos";
-                } else {
-                    options.style.display = "none";
-                    this.textContent = "Ver Treinamentos";
-                }
-            });
-        });
-    }
 
     // Renderiza FAQs
     function renderFAQs(page = 1, filteredFAQs = faqItems) {
@@ -165,21 +172,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Evento de busca
     searchInput.addEventListener("input", function () {
-        const searchTerm = this.value.toLowerCase();
+    const searchTerm = this.value.toLowerCase();
 
-        // Filtrar treinamentos e FAQs
-        renderTrainings(trainingTypes, searchTerm);
+    // Filtrar treinamentos e FAQs
+    renderTrainings(trainingTypes, searchTerm);
+    const filteredFAQs = filterFAQs(searchTerm);
 
-        const filteredFAQs = filterFAQs(searchTerm);
+    // Mostrar mensagem de "Nenhum resultado encontrado"
+    const noResultsMessage = document.getElementById("no-results-message");
+    const noTrainingResults = container.innerHTML.trim() === "";
+    const noFAQResults = filteredFAQs.length === 0;
 
-        // Retrair todas as FAQs se a busca estiver vazia
-        if (searchTerm === "") {
-            closeAllFAQs();
+    noResultsMessage.style.display = noTrainingResults && noFAQResults ? "block" : "none";
+
+    // Retrair FAQs se a busca estiver vazia
+    if (searchTerm === "") {
+        closeAllFAQs();
+        renderFAQs();
+    }
+});
+
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("training-button")) {
+        const button = event.target;
+        const trainingName = button.getAttribute("data-training");
+
+        // Adicionar o treinamento à lista de concluídos
+        if (!completedTrainings.includes(trainingName)) {
+            completedTrainings.push(trainingName);
+            localStorage.setItem("completedTrainings", JSON.stringify(completedTrainings));
         }
 
-        // Renderizar FAQs filtradas
-        if (filteredFAQs.length === 0 && searchTerm === "") {
-            renderFAQs();
-        }
-    });
+        // Re-renderizar os treinamentos para refletir o status concluído
+        renderTrainings(trainingTypes, searchInput.value.toLowerCase());
+    }
+});
+
+
 });

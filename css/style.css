@@ -258,3 +258,33 @@ nav img {
 .scrollable-list::-webkit-scrollbar-track {
     background: #f1f1f1; /* Cor do fundo da barra */
 }
+
+
+.faq-question {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.faq-question:hover {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.faq-item.open .faq-question {
+    background-color: #e6f7ff;
+    border-left: 4px solid #1890ff;
+    padding-left: 10px;
+}
+
+
+.training-button.completed {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    pointer-events: none;
+}
+
+.training-button.completed .completed-icon {
+    color: #155724;
+    margin-left: 5px;
+}
