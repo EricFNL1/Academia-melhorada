@@ -2,16 +2,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const trainingTypes = [
         {
             title: "Módulo Financeiro",
-            image: "https://img.freepik.com/free-photo/digital-graph-performance-with-businessman-hand-overlay_53876-101943.jpg?uid=R180807379&ga=GA1.1.728869221.1720634505&semt=ais_hybrid",
+            image: "https://img.freepik.com/free-photo/close-up-businessman-with-digital-tablet_1098-549.jpg?",
             trainings: [
                 { name: "Contas a Pagar", link: "contas-a-pagar.html" },
                 { name: "Contas a Receber", link: "contasareceber.html" },
+                { name: "Contas Bancárias", link: "#" },
+                { name: "Configurar Boleto & Banco", link: "#" },
                 { name: "Controle de Transferências", link: "controle-de-transferencias.html" },
             ],
         },
         {
             title: "Cadastros Gerais",
-            image: "https://img.freepik.com/free-photo/form-business-exam-comparison-option_1232-3835.jpg?t=st=1738351677~exp=1738355277~hmac=4b29133c0d1d1ba7779b978dd49b7e1999003c016fbc3f6bf09bf5a7c16691d3&w=1380",
+            image: "https://img.freepik.com/free-photo/form-business-exam-comparison-option_1232-3835.jpg?",
             trainings: [
                 { name: "Cadastrar Fornecedores", link: "fornecedores.html" },
                 { name: "Cadastrar Condomínios", link: "#" },
@@ -26,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ],
         },
     ];
+
 
     const container = document.getElementById("courses-container");
     const searchInput = document.getElementById("search-courses");
@@ -54,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <button class="btn btn-primary btn-sm toggle-options">
                                 ${isExpanded ? "Fechar Treinamentos" : "Ver Treinamentos"}
                             </button>
-                            <div class="training-options mt-3" style="display: ${isExpanded ? "block" : "none"};">
+                            <div class="training-options mt-3 scrollable-list" style="display: ${isExpanded ? "block" : "none"};">
                                 ${filteredTrainings
                                     .map(
                                         (training) =>

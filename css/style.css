@@ -240,3 +240,21 @@ nav img {
     text-decoration: none; /* Garante que o hover não traga o sublinhado */
 }
 
+.scrollable-list {
+    max-height: 150px; /* Limita a altura da lista de treinamentos */
+    overflow-y: auto; /* Adiciona a barra de rolagem vertical */
+    padding-right: 5px; /* Espaço para a barra de rolagem */
+}
+
+.scrollable-list::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+    background: #007bff; /* Cor do "polegar" da barra */
+    border-radius: 4px;
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do fundo da barra */
+}
