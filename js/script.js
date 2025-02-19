@@ -52,33 +52,64 @@ function renderTrainings(trainings, searchTerm = "") {
             cardElement.classList.add("col-md-4");
             const isExpanded = filteredTrainings.length > 0 && searchTerm !== "";
             cardElement.innerHTML = `
-                <div class="card course-card">
-                    <img src="${type.image}" alt="${type.title}" class="card-img-top training-image">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">${type.title}</h5>
-                        <button class="btn btn-primary btn-sm toggle-options">
-                            ${isExpanded ? "Fechar Treinamentos" : "Ver Treinamentos"}
-                        </button>
-                        <div class="training-options mt-3 scrollable-list" style="display: ${isExpanded ? "block" : "none"};">
-                            ${filteredTrainings
-                                .map(
-                                    (training) =>
-                                        `<button 
-                                            class="btn ${completedTrainings.includes(training.name) ? "btn-success" : "btn-outline-primary"} 
-                                                   btn-sm btn-block mb-2 training-button" 
-                                            data-training="${training.name}" 
-                                            onclick="window.location.href='${training.link}'">
-                                            ${training.name} ${completedTrainings.includes(training.name) ? "✔" : ""}
-                                        </button>`
-                                )
-                                .join("")}
+            <div class="card course-card">
+                <img src="${type.image}" alt="${type.title}" class="card-img-top training-image">
+                <div class="card-body text-center">
+                    <h5 class="card-title">${type.title}</h5>
+        
+                    <!-- Barra de progresso -->
+                    <div class="progress mb-2" style="height: 20px;">
+                        <div id="progress-${type.title.replace(/\s+/g, '-').toLowerCase()}" 
+                             class="progress-bar bg-success" role="progressbar" 
+                             style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            0%
                         </div>
                     </div>
+        
+                    <button class="btn btn-primary btn-sm toggle-options">
+                        ${isExpanded ? "Fechar Treinamentos" : "Ver Treinamentos"}
+                    </button>
+        
+                    <div class="training-options mt-3 scrollable-list" style="display: ${isExpanded ? "block" : "none"};">
+                        ${filteredTrainings
+                            .map(
+                                (training) =>
+                                    `<button 
+                                        class="btn ${completedTrainings.includes(training.name) ? "btn-success" : "btn-outline-primary"} 
+                                               btn-sm btn-block mb-2 training-button" 
+                                        data-training="${training.name}" 
+                                        data-module="${type.title}" 
+                                        onclick="window.location.href='${training.link}'">
+                                        ${training.name} ${completedTrainings.includes(training.name) ? "✔" : ""}
+                                    </button>`
+                            )
+                            .join("")}
+                    </div>
                 </div>
-            `;
+            </div>
+        `;
+        
             container.appendChild(cardElement);
         }
     });
+
+    function atualizarProgresso(moduleTitle) {
+        const moduleKey = moduleTitle.replace(/\s+/g, '-').toLowerCase();
+        const moduleTrainings = trainingTypes.find(t => t.title === moduleTitle).trainings.length;
+        const completedTrainingsInModule = completedTrainings.filter(t => 
+            trainingTypes.find(m => m.title === moduleTitle)?.trainings.some(train => train.name === t)
+        ).length;
+    
+        const porcentagem = (completedTrainingsInModule / moduleTrainings) * 100;
+        const progressBar = document.getElementById(`progress-${moduleKey}`);
+    
+        if (progressBar) {
+            progressBar.style.width = `${porcentagem}%`;
+            progressBar.setAttribute("aria-valuenow", porcentagem);
+            progressBar.textContent = `${Math.round(porcentagem)}%`;
+        }
+    }
+    
 
     // Adiciona interatividade aos botões "Ver Treinamentos"
     const toggleButtons = document.querySelectorAll(".toggle-options");
@@ -96,6 +127,7 @@ function renderTrainings(trainings, searchTerm = "") {
             }
         });
     });
+    trainingTypes.forEach((type) => atualizarProgresso(type.title));
 }
 
 
@@ -196,17 +228,20 @@ document.addEventListener("click", function (event) {
     if (event.target.classList.contains("training-button")) {
         const button = event.target;
         const trainingName = button.getAttribute("data-training");
+        const moduleTitle = button.getAttribute("data-module");
 
-        // Adicionar o treinamento à lista de concluídos
+        // Adicionar o treinamento concluído e salvar no localStorage
         if (!completedTrainings.includes(trainingName)) {
             completedTrainings.push(trainingName);
             localStorage.setItem("completedTrainings", JSON.stringify(completedTrainings));
         }
 
-        // Re-renderizar os treinamentos para refletir o status concluído
+        // Re-renderiza os treinamentos e atualiza a barra de progresso
         renderTrainings(trainingTypes, searchInput.value.toLowerCase());
+        atualizarProgresso(moduleTitle);
     }
 });
+
 
 
 });
