@@ -48,49 +48,108 @@
                 </div>
             </header>
 
-            <!-- Treinamento Section -->
-            <main class="container my-5">
-                <h2 class="text-primary">Contas a Pagar</h2>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Fluxo de Execução - Contas a Pagar</h5>
-                        <p class="card-text">
-                            Neste treinamento, você aprenderá os principais conceitos sobre o controle de contas a pagar,
-                            como registrar pagamentos, acompanhar despesas e gerar relatórios financeiros no módulo do sistema Point Condomínio.
-                        </p>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe src="https://player.vimeo.com/video/1008155251?" 
-                                    width="100%" height="450px" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Texto do Treinamento -->
-                <div class="training-text mt-5">
-                    <h4>Detalhes do Treinamento</h4>
-                    <p>
-                        O módulo "Contas a Pagar" ajuda a gerenciar todas as despesas financeiras de forma organizada e eficiente.
-                        Neste treinamento, você verá:
-                    </p>
-                    <ul>
-                        <li>Como registrar pagamentos e despesas recorrentes;</li>
-                        <li>Gerar notificações automáticas de vencimentos;</li>
-                        <li>Elaborar relatórios detalhados sobre despesas mensais.</li>
-                    </ul>
-                </div>
-            
-                <!-- Navegação entre Aulas -->
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <a href="index.html" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Voltar
-                    </a>
-                    <a href="contasareceber.html" class="btn btn-primary">
-                        Próximo <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </main>
-            
+         <!-- Treinamento Section -->
+<main class="container my-5">
+    <h2 class="text-primary">Contas a Pagar</h2>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Fluxo de Execução - Contas a Pagar</h5>
+        <p class="card-text">
+          Neste treinamento, você aprenderá os principais conceitos sobre o controle de contas a pagar,
+          como registrar pagamentos, acompanhar despesas e gerar relatórios financeiros no módulo do sistema Point Condomínio.
+        </p>
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe src="https://player.vimeo.com/video/1008155251" 
+                  width="100%" height="450px" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Texto do Treinamento com Paginação -->
+    <div class="training-text mt-5">
+      <h4>Detalhes do Treinamento</h4>
+      <div id="training-pages">
+        <!-- Página 1 -->
+        <div class="training-page" data-page="1">
+          <p>
+            O módulo "Contas a Pagar" ajuda a gerenciar todas as despesas financeiras de forma organizada e eficiente.
+            Neste treinamento, você verá:
+          </p>
+          <ul>
+            <li>Como registrar pagamentos e despesas recorrentes;</li>
+            <li>Gerar notificações automáticas de vencimentos;</li>
+            <li>Elaborar relatórios detalhados sobre despesas mensais.</li>
+          </ul>
+        </div>
+        <!-- Página 2 -->
+        <div class="training-page" data-page="2" style="display: none;">
+          <p>
+            Nesta segunda parte, abordaremos práticas recomendadas para conciliação de contas e controle de fluxo de caixa.
+            Você aprenderá a utilizar ferramentas do sistema para automatizar processos e reduzir erros manuais.
+          </p>
+          <p>
+            Além disso, serão apresentadas dicas para a análise de relatórios financeiros que ajudarão na tomada de decisão.
+          </p>
+        </div>
+      </div>
+  
+      <!-- Paginação para o treinamento escrito -->
+      <nav id="training-pagination" aria-label="Training Pagination" class="mt-3">
+        <ul class="pagination justify-content-center">
+          <li class="page-item active">
+            <a class="page-link" href="#" data-page="1">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" data-page="2">2</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  
+    <!-- Navegação entre Aulas -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <a href="index.html" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+      </a>
+      <a href="contasareceber.html" class="btn btn-primary">
+        Próximo <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </main>
+  
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const trainingPages = document.querySelectorAll("#training-pages .training-page");
+          const paginationLinks = document.querySelectorAll("#training-pagination .page-link");
+        
+          paginationLinks.forEach(link => {
+            link.addEventListener("click", function (e) {
+              e.preventDefault();
+              const page = this.getAttribute("data-page");
+        
+              // Oculta todas as páginas
+              trainingPages.forEach(pageDiv => {
+                pageDiv.style.display = "none";
+              });
+        
+              // Exibe a página selecionada
+              const activePage = document.querySelector(`#training-pages .training-page[data-page="${page}"]`);
+              if (activePage) {
+                activePage.style.display = "block";
+              }
+        
+              // Atualiza a classe ativa na paginação
+              paginationLinks.forEach(link => {
+                link.parentElement.classList.remove("active");
+              });
+              this.parentElement.classList.add("active");
+            });
+          });
+        });
+        </script>
+        
 </body>
 </html>
