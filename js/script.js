@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("search-courses");
   // Converte NodeList em array para facilitar a manipulação
   const faqItems = Array.from(document.querySelectorAll(".faq-item"));
-  const itemsPerPage = 3;
+  const itemsPerPage = 4;
   let currentPage = 1;
 
   // Recupera os treinamentos concluídos do localStorage
