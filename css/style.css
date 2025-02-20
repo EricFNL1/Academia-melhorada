@@ -288,3 +288,16 @@ nav img {
     color: #155724;
     margin-left: 5px;
 }
+
+/* Remove qualquer espaço interno do .card-body quando for topic-content */
+.training-topic .card-body.topic-content {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .training-topic .card-body.topic-content p,
+  .training-topic .card-body.topic-content ul,
+  .training-topic .card-body.topic-content li {
+    margin: 0;
+    padding: 5px 10px; /* ou ajuste como preferir */
+  }
+  

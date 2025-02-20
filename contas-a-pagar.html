@@ -11,6 +11,15 @@
   <!-- Seu CSS (opcional) -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/x-icon" href="/img/icone-negativo.png">
+
+  <style>
+    /* Faz a transição suave nos tópicos */
+    .topic-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+  </style>
 </head>
 <body>
   <div class="d-flex">
@@ -67,7 +76,7 @@
               <button class="list-group-item list-group-item-action active" data-page="1">
                 Treinamento Digital
               </button>
-              <!-- data-page="2": Treinamento Detalhado (texto + filtro) -->
+              <!-- data-page="2": Treinamento Detalhado -->
               <button class="list-group-item list-group-item-action" data-page="2">
                 Treinamento Detalhado
               </button>
@@ -95,127 +104,125 @@
               </div>
             </div>
 
-           <!-- Página 2: Texto Detalhado (Sem Filtro, Tópicos Retráteis) -->
-<!-- Página 2: Texto Detalhado (Sem Filtro, Tópicos com Card e Expand/Collapse) -->
-<div class="subpage" data-page="2" style="display: none;">
-  <!-- Conteúdo do Treinamento em "cards" colapsáveis -->
-  <div id="training-topics">
-    <!-- Tópico 1 -->
-    <div class="card mb-3 training-topic">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
-        <h5 class="mb-0">Menu de Acesso</h5>
-        <i class="bi bi-chevron-down toggle-icon"></i>
-      </div>
-      <div class="card-body topic-content" style="display: none;">
-        <p>Para começar, acesse o menu <strong>Módulo Financeiro</strong> → <strong>Contas a Pagar</strong>.</p>
-      </div>
-    </div>
+            <!-- Página 2: Tópicos Colapsáveis (um aberto por vez) -->
+            <div class="subpage" data-page="2" style="display: none;">
+              <div id="training-topics">
+                <!-- Tópico 1 -->
+                <div class="card mb-3 training-topic">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
+                    <h5 class="mb-0">Menu de Acesso</h5>
+                    <i class="bi bi-chevron-down toggle-icon"></i>
+                  </div>
+                  <div class="card-body topic-content">
+                    <p>Para começar, acesse o menu <strong>Módulo Financeiro</strong> → <strong>Contas a Pagar</strong>.</p>
+                  </div>
+                </div>
 
-    <!-- Tópico 2 -->
-    <div class="card mb-3 training-topic">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
-        <h5 class="mb-0">Selecionando o Condomínio</h5>
-        <i class="bi bi-chevron-down toggle-icon"></i>
-      </div>
-      <div class="card-body topic-content" style="display: none;">
-        <p>
-          Ao entrar no menu de contas a pagar, lembre-se de verificar se o condomínio selecionado no campo de seleção é o condomínio em que você deseja acessar esse módulo. Cada condomínio possui seu próprio “contas a pagar” com suas próprias despesas, portanto, ao selecionar um condomínio diferente, você mudará toda a visão de contas a pagar para o condomínio selecionado.
-          Para alterar o condomínio, apenas clique no condomínio desejado utilizando o campo de seleção, mostrado abaixo localizado no canto direito da barra superior.          
-        </p>
-      </div>
-    </div>
+                <!-- Tópico 2 -->
+                <div class="card mb-3 training-topic">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
+                    <h5 class="mb-0">Selecionando o Condomínio</h5>
+                    <i class="bi bi-chevron-down toggle-icon"></i>
+                  </div>
+                  <div class="card-body topic-content">
+                    <p>
+                      Ao entrar no menu de contas a pagar, verifique se o condomínio selecionado no campo de seleção é o desejado.
+                      Cada condomínio possui seu próprio “contas a pagar” com suas despesas, portanto, ao selecionar um condomínio diferente,
+                      a visão de contas a pagar será atualizada.
+                    </p>
+                  </div>
+                </div>
 
-    <!-- Tópico 3 -->
-    <div class="card mb-3 training-topic">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
-        <h5 class="mb-0">Filtros</h5>
-        <i class="bi bi-chevron-down toggle-icon"></i>
-      </div>
-      <div class="card-body topic-content" style="display: none;">
-        <p>
-          Utilize os filtros para exibir as despesas de acordo com sua necessidade.  
-          <strong><br>•	Situação: Pendentes e realizados, só pendentes ou só realizados;<br>
-            •	Tipo de Data: Por competência, por vencimento, por crédito ou por data de pagamento;<br>
-            •	Período: Data inicial e data final;<br>
-            •	Conta bancária: Você pode filtrar por uma conta específica ou todas as contas;<br>
-            •	Plano de contas: Você pode filtrar por um plano de contas específico ou todos os planos de conta.
-            </strong>
-        </p>
-        <p><strong>NOTA:</strong>Para expandir os filtros, clique no botão filtrar utilize os filtros desejados e clique em pesquisar. Não esqueça de clicar em limpar para retirar os filtros da última pesquisa.</p>
-      </div>
-    </div>
+                <!-- Tópico 3 -->
+                <div class="card mb-3 training-topic">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
+                    <h5 class="mb-0">Filtros</h5>
+                    <i class="bi bi-chevron-down toggle-icon"></i>
+                  </div>
+                  <div class="card-body topic-content">
+                    <p>
+                      Utilize os filtros para exibir as despesas de acordo com sua necessidade:
+                      <strong><br>• Situação: Pendentes e realizados, só pendentes ou só realizados;<br>
+                        • Tipo de Data: Por competência, por vencimento, por crédito ou por data de pagamento;<br>
+                        • Período: Data inicial e data final;<br>
+                        • Conta bancária: Você pode filtrar por uma conta específica ou todas as contas;<br>
+                        • Plano de contas: Você pode filtrar por um plano de contas específico ou todos os planos de conta.
+                      </strong>
+                    </p>
+                    <p><strong>NOTA:</strong> Para expandir os filtros, clique no botão "Filtrar", utilize os filtros desejados e clique em "Pesquisar". Não esqueça de clicar em "Limpar" para retirar os filtros da última pesquisa.</p>
+                  </div>
+                </div>
 
-    <!-- Tópico 4 -->
-    <div class="card mb-3 training-topic">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
-        <h5 class="mb-0">Criar uma despesa</h5>
-        <i class="bi bi-chevron-down toggle-icon"></i>
-      </div>
-      <div class="card-body topic-content" style="display: none;">
-        <p>Para incluir uma nova despesa, clique em <strong>"Adicionar Despesa"</strong>...</p>
-        <ul>
-          <li><strong>Rateio:</strong> Caso deseje que este título seja rateado na opção cobrança em lote, selecione o modo de rateio;</li>
-          <li><strong>Tipo de Pagamento:</strong> Informe como o título deverá ser pago;</li>
-          <li><strong>Plano de Contas:</strong> Plano de contas da despesa;</li>
-          <li><strong>Centro de Custos:</strong> Centro de custo da despesa;</li>
-          <li><strong>Número de Documento:</strong> Número do documento;</li>
-          <li><strong>Data de Competência:</strong> Data de competência do título;</li>
-          <li><strong>Linha Digitável:</strong> Representação numérica do código do boleto;</li>
-          <li><strong>Data de Vencimento:</strong> Data de vencimento do título;</li>
-          <li><strong>Pago:</strong> Informe se este título já foi pago ou não;</li>
-          <li><strong>Tipo de Comprovante:</strong> Informe o tipo de comprovante;</li>
-          <li><strong>Número do Comprovante:</strong> Informe o número do comprovante;</li>
-          <li><strong>Exibir no calendário:</strong> Informe se este título deve aparecer no calendário da tela principal;</li>
-          <li><strong>Incluir subitens:</strong> Informe a composição da cobrança;</li>
-          <li><strong>Nota Fiscal:</strong> Caso possua um arquivo digitalizado, informe-o aqui. Exemplo: cópia da nota fiscal. É importante anexar todas as notas fiscais, pois serão utilizadas na confecção do book digital;</li>
-          <li><strong>Recibo:</strong> Importante anexar todos os recibos dos pagamentos, pois serão utilizados como comprovante de pagamento na confecção do book digital;</li>
-          <li><strong>Até:</strong> Informe até que data a repetição deve ocorrer;</li>
-          <li><strong>Observações:</strong> Informe qualquer informação que julgar necessário;</li>
-          <li><strong>Pagar após incluir:</strong> Após adicionar a despesa, já redireciona para o pagamento.</li>          
-        </ul>
-        <p><strong>NOTA:</strong>Para expandir os filtros, clique no botão filtrar utilize os filtros desejados e clique em pesquisar. Não esqueça de clicar em limpar para retirar os filtros da última pesquisa.</p>
-      </div>
-    </div>
+                <!-- Tópico 4 -->
+                <div class="card mb-3 training-topic">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
+                    <h5 class="mb-0">Criar uma despesa</h5>
+                    <i class="bi bi-chevron-down toggle-icon"></i>
+                  </div>
+                  <div class="card-body topic-content">
+                    <p>Para incluir uma nova despesa, clique em <strong>"Adicionar Despesa"</strong>...</p>
+                    <ul>
+                      <li><strong>Rateio:</strong> Caso deseje que este título seja rateado na opção cobrança em lote, selecione o modo de rateio;</li>
+                      <li><strong>Tipo de Pagamento:</strong> Informe como o título deverá ser pago;</li>
+                      <li><strong>Plano de Contas:</strong> Plano de contas da despesa;</li>
+                      <li><strong>Centro de Custos:</strong> Centro de custo da despesa;</li>
+                      <li><strong>Número de Documento:</strong> Número do documento;</li>
+                      <li><strong>Data de Competência:</strong> Data de competência do título;</li>
+                      <li><strong>Linha Digitável:</strong> Representação numérica do código do boleto;</li>
+                      <li><strong>Data de Vencimento:</strong> Data de vencimento do título;</li>
+                      <li><strong>Pago:</strong> Informe se este título já foi pago ou não;</li>
+                      <li><strong>Tipo de Comprovante:</strong> Informe o tipo de comprovante;</li>
+                      <li><strong>Número do Comprovante:</strong> Informe o número do comprovante;</li>
+                      <li><strong>Exibir no calendário:</strong> Informe se este título deve aparecer no calendário;</li>
+                      <li><strong>Incluir subitens:</strong> Informe a composição da cobrança;</li>
+                      <li><strong>Nota Fiscal:</strong> Caso possua um arquivo digitalizado, informe-o aqui. É importante anexar todas as notas fiscais, pois serão utilizadas no book digital;</li>
+                      <li><strong>Recibo:</strong> Anexe todos os recibos de pagamento, eles serão utilizados como comprovante no book digital;</li>
+                      <li><strong>Até:</strong> Informe até que data a repetição deve ocorrer;</li>
+                      <li><strong>Observações:</strong> Informe qualquer informação que julgar necessário;</li>
+                      <li><strong>Pagar após incluir:</strong> Após adicionar a despesa, já redireciona para o pagamento.</li>
+                    </ul>
+                  </div>
+                </div>
 
-    <!-- Tópico 5 -->
-    <div class="card mb-3 training-topic">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
-        <h5 class="mb-0">Liquidação da despesa</h5>
-        <i class="bi bi-chevron-down toggle-icon"></i>
-      </div>
-      <div class="card-body topic-content" style="display: none;">
-        <p>Para baixar um título, clique no botão <strong>"Pagar"</strong> na linha correspondente. Esta opção só estará disponível para os títulos que ainda não foram baixados.</p>
-        <p>Será exibido um formulário para captura das informações da baixa. Informe a data de pagamento, juros e multa se houver e clique em "Pagar".</p>
-      </div>
-    </div>
+                <!-- Tópico 5 -->
+                <div class="card mb-3 training-topic">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
+                    <h5 class="mb-0">Liquidação da despesa</h5>
+                    <i class="bi bi-chevron-down toggle-icon"></i>
+                  </div>
+                  <div class="card-body topic-content">
+                    <p>Para baixar um título, clique no botão <strong>"Pagar"</strong> na linha correspondente. Esta opção só estará disponível para os títulos que ainda não foram baixados.</p>
+                    <p>Será exibido um formulário para captura das informações da baixa. Informe a data de pagamento, juros e multa se houver e clique em "Pagar".</p>
+                  </div>
+                </div>
 
-    <!-- Tópico 6 -->
-    <div class="card mb-3 training-topic">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
-        <h5 class="mb-0">Estorno da baixa</h5>
-        <i class="bi bi-chevron-down toggle-icon"></i>
-      </div>
-      <div class="card-body topic-content" style="display: none;">
-        <p>Caso deseje estornar uma baixa realizada, clique no botão de <strong>"Engrenagem"</strong>" na linha correspondente e então clique no ícone <strong> “visualizar”</strong>, após isso irá abrir uma tela com os dados do lançamento e na parte inferior o botão <strong>"Estornar"</strong>.</p>
-      </div>
-    </div>
+                <!-- Tópico 6 -->
+                <div class="card mb-3 training-topic">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
+                    <h5 class="mb-0">Estorno da baixa</h5>
+                    <i class="bi bi-chevron-down toggle-icon"></i>
+                  </div>
+                  <div class="card-body topic-content">
+                    <p>Caso deseje estornar uma baixa realizada, clique no botão de <strong>"Engrenagem"</strong> na linha correspondente e então clique em <strong>"Visualizar"</strong>. Após isso, será exibida uma tela com os dados do lançamento e, na parte inferior, o botão <strong>"Estornar"</strong>.</p>
+                  </div>
+                </div>
 
-    <!-- Tópico 7 -->
-    <div class="card mb-3 training-topic">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
-        <h5 class="mb-0">Remessa e retorno de pagamento</h5>
-        <i class="bi bi-chevron-down toggle-icon"></i>
-      </div>
-      <div class="card-body topic-content" style="display: none;">
-        <p>A remessa e retorno de pagamento é uma funcionalidade que tem como principal objetivo facilitar a vida dos administradores, trazendo maior praticidade no momento de efetuar o agendamento e pagamento de despesas no banco, o que gera maior praticidade, eficiência e segurança na gestão financeira dos condomínios.</p>
-        <p>Para gerar um retorno de pagamento é necessário que os dados bancários dos fornecedores estejam devidamente cadastrados:</p>
-        <p>Após isso é necessário que a conta bancária onde o pagamento será efetuado esteja com os flags de “É uma conta bancária “e “Integração bancária” ativos.</p>
-        <p>Quando a despesa for cadastrada, preencha corretamente o campo <strong>"Número do Documento / Cheque / Linha Digitável"</strong>seja preenchido corretamente com a linha digitavél do boleto, caso esta seja a forma de pagamento.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
+                <!-- Tópico 7 -->
+                <div class="card mb-3 training-topic">
+                  <div class="card-header bg-light d-flex justify-content-between align-items-center topic-title" style="cursor: pointer;">
+                    <h5 class="mb-0">Remessa e retorno de pagamento</h5>
+                    <i class="bi bi-chevron-down toggle-icon"></i>
+                  </div>
+                  <div class="card-body topic-content">
+                    <p>A remessa e retorno de pagamento facilita a vida dos administradores, trazendo maior praticidade no agendamento e pagamento de despesas no banco, aumentando a eficiência na gestão financeira.</p>
+                    <p>Para gerar um retorno de pagamento é necessário que os dados bancários dos fornecedores estejam devidamente cadastrados e que a conta bancária tenha “É uma conta bancária” e “Integração bancária” ativos.</p>
+                    <p>Quando a despesa for cadastrada, preencha corretamente o campo <strong>"Número do Documento / Cheque / Linha Digitável"</strong> com a linha digitável do boleto, se essa for a forma de pagamento.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Navegação entre Aulas (exemplo, se quiser) -->
         <div class="d-flex justify-content-between align-items-center mt-4">
@@ -230,89 +237,72 @@
     </div>
   </div>
 
-  <!-- Script: Troca de “sub-páginas” + Filtro -->
+  <!-- Script Unificado -->
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const menuItems = document.querySelectorAll('#internal-menu .list-group-item');
-      const subpages = document.querySelectorAll('.subpage');
-      const searchInput = document.getElementById('training-search');
-      const noResultsMessage = document.getElementById('no-results-message');
-      const topics = document.querySelectorAll('.training-topic');
+  document.addEventListener('DOMContentLoaded', function() {
+    // -------------------------
+    // 1) Sub-páginas (vídeo vs. detalhado)
+    // -------------------------
+    const menuItems = document.querySelectorAll('#internal-menu .list-group-item');
+    const subpages = document.querySelectorAll('.subpage');
 
-      // -------- Troca de “sub-páginas” (Introdução vs Treinamento) --------
-      menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-          // Remove 'active' de todos
-          menuItems.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
+    menuItems.forEach(item => {
+      item.addEventListener('click', function() {
+        // Remove 'active' de todos
+        menuItems.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
 
-          // Identifica a página alvo
-          const page = this.getAttribute('data-page');
+        // Identifica a página alvo
+        const page = this.getAttribute('data-page');
 
-          // Esconde todas as subpages
-          subpages.forEach(pg => {
-            pg.style.display = 'none';
-          });
-          // Mostra a subpage correspondente
-          const target = document.querySelector(`.subpage[data-page="${page}"]`);
-          if (target) {
-            target.style.display = 'block';
-          }
+        // Esconde todas as subpages
+        subpages.forEach(pg => {
+          pg.style.display = 'none';
         });
-      });
-
-      // -------- Filtro de busca no texto do Treinamento Detalhado --------
-      searchInput?.addEventListener('input', function() {
-        const term = this.value.toLowerCase().trim();
-        let foundAny = false;
-
-        // Se o usuário está na página 2 (Treinamento Detalhado),
-        // filtrar os tópicos; caso contrário, não faz nada.
-        const isTrainingVisible = document.querySelector('.subpage[data-page="2"]')?.style.display !== 'none';
-        if (!isTrainingVisible) return;
-
-        // Loop em cada tópico
-        topics.forEach(topic => {
-          const text = topic.textContent.toLowerCase();
-          if (text.includes(term) || term === "") {
-            topic.style.display = 'block';
-            foundAny = true;
-          } else {
-            topic.style.display = 'none';
-          }
-        });
-
-        // Se não encontrou nada e o campo não está vazio => mensagem de erro
-        if (!foundAny && term !== "") {
-          noResultsMessage.style.display = 'block';
-        } else {
-          noResultsMessage.style.display = 'none';
+        // Mostra a subpage correspondente
+        const target = document.querySelector(`.subpage[data-page="${page}"]`);
+        if (target) {
+          target.style.display = 'block';
         }
       });
     });
-  </script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  // Seleciona todos os tópicos
-  const topics = document.querySelectorAll('.training-topic');
+    // -------------------------
+    // 2) Tópicos colapsáveis (abre um, fecha os outros)
+    // -------------------------
+    const topics = document.querySelectorAll('.training-topic');
+    topics.forEach(topic => {
+      const title = topic.querySelector('.topic-title');
+      const content = topic.querySelector('.topic-content');
+      const icon = topic.querySelector('.toggle-icon');
 
-  topics.forEach(topic => {
-    // Para cada tópico, pegamos o título e o conteúdo
-    const title = topic.querySelector('.topic-title');
-    const content = topic.querySelector('.topic-content');
+      // Garante que cada tópico inicie fechado
+      content.style.maxHeight = '0';
 
-    // Ao clicar no título, alternamos o display do conteúdo
-    title.addEventListener('click', function() {
-      if (content.style.display === 'none') {
-        content.style.display = 'block';
-      } else {
-        content.style.display = 'none';
-      }
+      title.addEventListener('click', function() {
+        // Verifica se o tópico clicado está aberto
+        const isOpen = content.classList.contains('open');
+
+        // Fecha todos os tópicos
+        topics.forEach(t => {
+          const c = t.querySelector('.topic-content');
+          const ic = t.querySelector('.toggle-icon');
+          c.classList.remove('open');
+          c.style.maxHeight = '0';
+          ic.classList.remove('bi-chevron-up');
+          ic.classList.add('bi-chevron-down');
+        });
+
+        // Se o tópico clicado estava fechado, abre-o
+        if (!isOpen) {
+          content.classList.add('open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.classList.remove('bi-chevron-down');
+          icon.classList.add('bi-chevron-up');
+        }
+      });
     });
   });
-});
-
   </script>
 </body>
 </html>
