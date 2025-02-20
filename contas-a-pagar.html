@@ -119,8 +119,8 @@
       </div>
       <div class="card-body topic-content" style="display: none;">
         <p>
-          Ao entrar no menu de contas a pagar, lembre-se de verificar se o condomínio selecionado 
-          no campo de seleção é o condomínio em que você deseja acessar esse módulo...
+          Ao entrar no menu de contas a pagar, lembre-se de verificar se o condomínio selecionado no campo de seleção é o condomínio em que você deseja acessar esse módulo. Cada condomínio possui seu próprio “contas a pagar” com suas próprias despesas, portanto, ao selecionar um condomínio diferente, você mudará toda a visão de contas a pagar para o condomínio selecionado.
+          Para alterar o condomínio, apenas clique no condomínio desejado utilizando o campo de seleção, mostrado abaixo localizado no canto direito da barra superior.          
         </p>
       </div>
     </div>
@@ -134,9 +134,14 @@
       <div class="card-body topic-content" style="display: none;">
         <p>
           Utilize os filtros para exibir as despesas de acordo com sua necessidade.  
-          <strong>Situação, Tipo de Data, Período, Conta bancária, Plano de contas...</strong>
+          <strong><br>•	Situação: Pendentes e realizados, só pendentes ou só realizados;<br>
+            •	Tipo de Data: Por competência, por vencimento, por crédito ou por data de pagamento;<br>
+            •	Período: Data inicial e data final;<br>
+            •	Conta bancária: Você pode filtrar por uma conta específica ou todas as contas;<br>
+            •	Plano de contas: Você pode filtrar por um plano de contas específico ou todos os planos de conta.
+            </strong>
         </p>
-        <p><strong>NOTA:</strong> Para expandir os filtros, clique no botão "Filtrar"...</p>
+        <p><strong>NOTA:</strong>Para expandir os filtros, clique no botão filtrar utilize os filtros desejados e clique em pesquisar. Não esqueça de clicar em limpar para retirar os filtros da última pesquisa.</p>
       </div>
     </div>
 
@@ -149,10 +154,26 @@
       <div class="card-body topic-content" style="display: none;">
         <p>Para incluir uma nova despesa, clique em <strong>"Adicionar Despesa"</strong>...</p>
         <ul>
-          <li><strong>Fornecedor:</strong> Cadastre ou informe a quem este valor será pago;</li>
-          <li><strong>Descrição:</strong> Informe uma descrição que identifique esta despesa;</li>
-          <li>...</li>
+          <li><strong>Rateio:</strong> Caso deseje que este título seja rateado na opção cobrança em lote, selecione o modo de rateio;</li>
+          <li><strong>Tipo de Pagamento:</strong> Informe como o título deverá ser pago;</li>
+          <li><strong>Plano de Contas:</strong> Plano de contas da despesa;</li>
+          <li><strong>Centro de Custos:</strong> Centro de custo da despesa;</li>
+          <li><strong>Número de Documento:</strong> Número do documento;</li>
+          <li><strong>Data de Competência:</strong> Data de competência do título;</li>
+          <li><strong>Linha Digitável:</strong> Representação numérica do código do boleto;</li>
+          <li><strong>Data de Vencimento:</strong> Data de vencimento do título;</li>
+          <li><strong>Pago:</strong> Informe se este título já foi pago ou não;</li>
+          <li><strong>Tipo de Comprovante:</strong> Informe o tipo de comprovante;</li>
+          <li><strong>Número do Comprovante:</strong> Informe o número do comprovante;</li>
+          <li><strong>Exibir no calendário:</strong> Informe se este título deve aparecer no calendário da tela principal;</li>
+          <li><strong>Incluir subitens:</strong> Informe a composição da cobrança;</li>
+          <li><strong>Nota Fiscal:</strong> Caso possua um arquivo digitalizado, informe-o aqui. Exemplo: cópia da nota fiscal. É importante anexar todas as notas fiscais, pois serão utilizadas na confecção do book digital;</li>
+          <li><strong>Recibo:</strong> Importante anexar todos os recibos dos pagamentos, pois serão utilizados como comprovante de pagamento na confecção do book digital;</li>
+          <li><strong>Até:</strong> Informe até que data a repetição deve ocorrer;</li>
+          <li><strong>Observações:</strong> Informe qualquer informação que julgar necessário;</li>
+          <li><strong>Pagar após incluir:</strong> Após adicionar a despesa, já redireciona para o pagamento.</li>          
         </ul>
+        <p><strong>NOTA:</strong>Para expandir os filtros, clique no botão filtrar utilize os filtros desejados e clique em pesquisar. Não esqueça de clicar em limpar para retirar os filtros da última pesquisa.</p>
       </div>
     </div>
 
@@ -163,7 +184,8 @@
         <i class="bi bi-chevron-down toggle-icon"></i>
       </div>
       <div class="card-body topic-content" style="display: none;">
-        <p>Para baixar um título, clique no botão <strong>"Pagar"</strong> na linha correspondente...</p>
+        <p>Para baixar um título, clique no botão <strong>"Pagar"</strong> na linha correspondente. Esta opção só estará disponível para os títulos que ainda não foram baixados.</p>
+        <p>Será exibido um formulário para captura das informações da baixa. Informe a data de pagamento, juros e multa se houver e clique em "Pagar".</p>
       </div>
     </div>
 
@@ -174,7 +196,7 @@
         <i class="bi bi-chevron-down toggle-icon"></i>
       </div>
       <div class="card-body topic-content" style="display: none;">
-        <p>Caso deseje estornar uma baixa realizada, clique no botão de <strong>"Engrenagem"</strong>...</p>
+        <p>Caso deseje estornar uma baixa realizada, clique no botão de <strong>"Engrenagem"</strong>" na linha correspondente e então clique no ícone <strong> “visualizar”</strong>, após isso irá abrir uma tela com os dados do lançamento e na parte inferior o botão <strong>"Estornar"</strong>.</p>
       </div>
     </div>
 
@@ -185,8 +207,10 @@
         <i class="bi bi-chevron-down toggle-icon"></i>
       </div>
       <div class="card-body topic-content" style="display: none;">
-        <p>A remessa e retorno de pagamento facilita a vida dos administradores...</p>
-        <p>Quando a despesa for cadastrada, preencha corretamente o campo <strong>"Número do Documento / Cheque / Linha Digitável"</strong>...</p>
+        <p>A remessa e retorno de pagamento é uma funcionalidade que tem como principal objetivo facilitar a vida dos administradores, trazendo maior praticidade no momento de efetuar o agendamento e pagamento de despesas no banco, o que gera maior praticidade, eficiência e segurança na gestão financeira dos condomínios.</p>
+        <p>Para gerar um retorno de pagamento é necessário que os dados bancários dos fornecedores estejam devidamente cadastrados:</p>
+        <p>Após isso é necessário que a conta bancária onde o pagamento será efetuado esteja com os flags de “É uma conta bancária “e “Integração bancária” ativos.</p>
+        <p>Quando a despesa for cadastrada, preencha corretamente o campo <strong>"Número do Documento / Cheque / Linha Digitável"</strong>seja preenchido corretamente com a linha digitavél do boleto, caso esta seja a forma de pagamento.</p>
       </div>
     </div>
   </div>
