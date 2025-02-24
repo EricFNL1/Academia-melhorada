@@ -263,6 +263,24 @@ document.addEventListener("DOMContentLoaded", function() {
       showSlide(0);
       // Filtro de FAQs
       filterFAQs(term);
+
+      // SE O USUÁRIO LIMPAR A BUSCA => FECHA TUDO
+      if (term === "") {
+        closeAllTrainings();
+        closeAllFAQs();
+      }
+    });
+  }
+
+  // Fecha todos os treinamentos (helper)
+  function closeAllTrainings() {
+    // Fecha todas as .training-options
+    document.querySelectorAll(".training-options").forEach(opt => {
+      opt.style.display = "none";
+    });
+    // Volta todos os botões para "Ver Treinamentos"
+    document.querySelectorAll(".toggle-options").forEach(btn => {
+      btn.textContent = "Ver Treinamentos";
     });
   }
 });
