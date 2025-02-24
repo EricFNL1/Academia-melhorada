@@ -31,6 +31,15 @@ document.addEventListener("DOMContentLoaded", function() {
       ],
     },
     // Adicione mais módulos se quiser
+
+    {
+      title: "Comunicação",
+      image: "https://img.freepik.com/free-photo/cheerful-woman-holding-sign_53876-15197.jpg",
+      trainings: [
+        { name: "Envios de e-mail", link: ".html" },
+        { name: "Notificações Whatsapp", link: ".html" },
+      ],
+    },
   ];
 
   const carouselContainer = document.getElementById("courses-carousel");
