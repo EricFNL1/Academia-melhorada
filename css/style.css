@@ -271,12 +271,40 @@ nav img {
     object-fit: cover; /* Ajusta a imagem dentro do espaço definido */
 }
 
+/* Padrão quando aberto */
 .training-options {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-    display: none; /* Inicialmente oculto */
+    margin-top: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+  
+  /* Se estiver display: none (fechado), remove fundo e margem */
+  .training-options[style*="display: none"] {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background-color: transparent !important;
+  }
+  
+  
+  /* Quando fechado, remove fundo, margem e borda */
+  .closed-training {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background-color: transparent !important;
+  }
+  
+
+.training-options[style*="display: none"] {
+  margin-top: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background-color: transparent !important;
 }
+
 
 .training-options li {
     padding: 5px 0;

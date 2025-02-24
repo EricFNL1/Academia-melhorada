@@ -33,13 +33,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Adicione mais módulos se quiser
   ];
 
-  // Container do carousel
   const carouselContainer = document.getElementById("courses-carousel");
-  // Input de busca
   const searchInput = document.getElementById("search-courses");
-  // Mensagem de “Nenhum resultado”
   const noResultsMessage = document.getElementById("no-results-message") || { style: { display: "none" } };
-  // Slide atual
   let currentSlide = 0;
 
   // Recupera treinamentos concluídos do localStorage
@@ -107,9 +103,17 @@ document.addEventListener("DOMContentLoaded", function() {
       if (index === 0) slideDiv.classList.add("active");
 
       group.forEach(module => {
-        // Coluna
+        // Filtra treinamentos do módulo para saber se ele deve abrir
+        const filteredTrainings = module.trainings.filter(t => 
+          t.name.toLowerCase().includes(searchTerm)
+        );
+        // Se há busca e encontrou algum training => abre automaticamente
+        const isExpanded = (searchTerm !== "" && filteredTrainings.length > 0);
+
+        // Cria a coluna
         const col = document.createElement("div");
-        col.className = "col d-flex"; // d-flex => expande card
+        col.className = "col";
+        
 
         // Monta o card do módulo
         let cardHTML = `
@@ -124,8 +128,10 @@ document.addEventListener("DOMContentLoaded", function() {
                   0%
                 </div>
               </div>
-              <button class="btn btn-primary btn-sm toggle-options">Ver Treinamentos</button>
-              <div class="training-options mt-3 scrollable-list" style="display: none;">
+              <button class="btn btn-primary btn-sm toggle-options">
+                ${isExpanded ? "Fechar Treinamentos" : "Ver Treinamentos"}
+              </button>
+              <div class="training-options mt-3 scrollable-list" style="display: ${isExpanded ? "block" : "none"};">
         `;
 
         // Lista de treinamentos
@@ -238,20 +244,23 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   /* ----------------------------------------
-     9) Filtro de busca
+     9) Filtro de busca (módulos + treinamentos + FAQs)
   ---------------------------------------- */
   if (searchInput) {
     searchInput.addEventListener("input", function() {
       const term = this.value.toLowerCase();
+      // Filtro do carousel
       renderCarousel(trainingTypes, term);
       showSlide(0);
+      // Filtro de FAQs
+      filterFAQs(term);
     });
   }
 });
 
 
 /* ---------------------------------------------------
-   2) SEÇÃO DE FAQs (com paginação)
+   2) SEÇÃO DE FAQs (com paginação e “abrir se match”)
 --------------------------------------------------- */
 const faqItems = Array.from(document.querySelectorAll(".faq-item"));
 let currentPageFAQ = 1;
@@ -292,7 +301,7 @@ function renderPagination(filteredFAQs, currentPage) {
   if (nextFaqBtn) nextFaqBtn.disabled = currentPage === totalPages;
 }
 
-// Clique para abrir/fechar FAQ
+// Clique para abrir/fechar FAQ (caso não seja filtrada)
 faqItems.forEach(item => {
   const question = item.querySelector(".faq-question");
   const answer = item.querySelector(".faq-answer");
@@ -302,12 +311,17 @@ faqItems.forEach(item => {
   });
 });
 
-// Filtro de FAQs (se quiser usar)
+/* 
+   filterFAQs(searchTerm):
+   - Abre automaticamente as FAQs que baterem com a busca
+   - Exibe a resposta (style.display = "block")
+*/
 function filterFAQs(searchTerm) {
   const filtered = faqItems.filter(item => {
     const q = item.querySelector(".faq-question").textContent.toLowerCase();
     const a = item.querySelector(".faq-answer").textContent.toLowerCase();
     const match = q.includes(searchTerm) || a.includes(searchTerm);
+    // Abre a FAQ se der match
     item.classList.toggle("open", match);
     item.querySelector(".faq-answer").style.display = match ? "block" : "none";
     return match;
