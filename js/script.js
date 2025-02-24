@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   /* ----------------------------------------
-     1) CAROUSEL DE MÓDULOS (3 POR SLIDE)
+     1) DADOS DOS MÓDULOS
   ---------------------------------------- */
   const trainingTypes = [
     {
@@ -33,15 +33,21 @@ document.addEventListener("DOMContentLoaded", function() {
     // Adicione mais módulos se quiser
   ];
 
+  // Container do carousel
   const carouselContainer = document.getElementById("courses-carousel");
+  // Input de busca
   const searchInput = document.getElementById("search-courses");
-  const noResultsMessage = document.getElementById("no-results-message");
+  // Mensagem de “Nenhum resultado”
+  const noResultsMessage = document.getElementById("no-results-message") || { style: { display: "none" } };
+  // Slide atual
   let currentSlide = 0;
 
   // Recupera treinamentos concluídos do localStorage
   const completedTrainings = JSON.parse(localStorage.getItem("completedTrainings")) || [];
 
-  // Função para dividir array em grupos de 3
+  /* ----------------------------------------
+     2) chunkArray: divide array em grupos de 3
+  ---------------------------------------- */
   function chunkArray(array, size) {
     const result = [];
     for (let i = 0; i < array.length; i += size) {
@@ -50,14 +56,20 @@ document.addEventListener("DOMContentLoaded", function() {
     return result;
   }
 
-  // Atualiza barra de progresso do módulo
+  /* ----------------------------------------
+     3) Atualiza barra de progresso
+  ---------------------------------------- */
   function atualizarProgresso(moduleTitle) {
     const moduleKey = moduleTitle.replace(/\s+/g, "-").toLowerCase();
-    const moduleTrainings = trainingTypes.find(t => t.title === moduleTitle).trainings.length;
-    const completedInModule = completedTrainings.filter(t =>
-      trainingTypes.find(m => m.title === moduleTitle)?.trainings.some(train => train.name === t)
+    const moduleData = trainingTypes.find(t => t.title === moduleTitle);
+    if (!moduleData) return;
+
+    const totalTrainings = moduleData.trainings.length;
+    const completedCount = completedTrainings.filter(tName =>
+      moduleData.trainings.some(tr => tr.name === tName)
     ).length;
-    const porcentagem = (completedInModule / moduleTrainings) * 100;
+
+    const porcentagem = (completedCount / totalTrainings) * 100 || 0;
     const progressBar = document.getElementById(`progress-${moduleKey}`);
     if (progressBar) {
       progressBar.style.width = `${porcentagem}%`;
@@ -66,33 +78,40 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Renderiza o carousel (3 módulos por slide)
+  /* ----------------------------------------
+     4) Renderiza o carousel (3 módulos/slide)
+  ---------------------------------------- */
   function renderCarousel(modules, searchTerm = "") {
     carouselContainer.innerHTML = "";
-    // Filtra módulos conforme busca
+
+    // Filtro: busca no título do módulo e nome dos treinamentos
     let filtered = modules.filter(m =>
       m.title.toLowerCase().includes(searchTerm) ||
       m.trainings.some(t => t.name.toLowerCase().includes(searchTerm))
     );
+    // Se busca vazio, exibe todos
     if (searchTerm === "") {
-      filtered = modules; 
+      filtered = modules;
     }
+
+    // Exibe mensagem se não houver resultados
     noResultsMessage.style.display = filtered.length === 0 ? "block" : "none";
 
     // Divide em grupos de 3
     const slides = chunkArray(filtered, 3);
 
     slides.forEach((group, index) => {
-      // Cria um slide com classes row row-cols-1 row-cols-md-3 g-3
+      // Cria o slide => row row-cols-1 row-cols-md-3 g-3
       const slideDiv = document.createElement("div");
       slideDiv.className = "carousel-slide row row-cols-1 row-cols-md-3 g-3";
       if (index === 0) slideDiv.classList.add("active");
 
       group.forEach(module => {
-        // Cria a coluna
+        // Coluna
         const col = document.createElement("div");
-        col.className = "col d-flex"; // d-flex para expandir o card
+        col.className = "col d-flex"; // d-flex => expande card
 
+        // Monta o card do módulo
         let cardHTML = `
           <div class="course-card flex-grow-1">
             <img src="${module.image}" alt="${module.title}" class="card-img-top training-image">
@@ -106,8 +125,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 </div>
               </div>
               <button class="btn btn-primary btn-sm toggle-options">Ver Treinamentos</button>
-              <div class="training-options mt-3 scrollable-list">
+              <div class="training-options mt-3 scrollable-list" style="display: none;">
         `;
+
+        // Lista de treinamentos
         module.trainings.forEach(t => {
           const isCompleted = completedTrainings.includes(t.name);
           cardHTML += `
@@ -117,25 +138,34 @@ document.addEventListener("DOMContentLoaded", function() {
             </button>
           `;
         });
+
         cardHTML += `
               </div>
             </div>
           </div>
         `;
+
         col.innerHTML = cardHTML;
         slideDiv.appendChild(col);
       });
 
       carouselContainer.appendChild(slideDiv);
     });
+
+    // Após renderizar, atualiza a barra de progresso de todos os módulos
+    trainingTypes.forEach(m => atualizarProgresso(m.title));
   }
 
-  // Exibe apenas o slide atual
+  /* ----------------------------------------
+     5) Exibe apenas o slide atual
+  ---------------------------------------- */
   function showSlide(index) {
     const slides = document.querySelectorAll(".carousel-slide");
     if (slides.length === 0) return;
+
     if (index < 0) index = slides.length - 1;
     if (index >= slides.length) index = 0;
+
     slides.forEach((slide, i) => {
       slide.classList.toggle("active", i === index);
       slide.style.display = i === index ? "flex" : "none";
@@ -143,19 +173,23 @@ document.addEventListener("DOMContentLoaded", function() {
     currentSlide = index;
   }
 
-  // Inicializa
+  /* ----------------------------------------
+     6) Inicializa
+  ---------------------------------------- */
   renderCarousel(trainingTypes);
   showSlide(0);
 
-  // Navegação com setas
-  document.getElementById("prev-btn").addEventListener("click", function() {
+  // Botões de navegação do carousel
+  document.getElementById("prev-btn").addEventListener("click", () => {
     showSlide(currentSlide - 1);
   });
-  document.getElementById("next-btn").addEventListener("click", function() {
+  document.getElementById("next-btn").addEventListener("click", () => {
     showSlide(currentSlide + 1);
   });
 
-  // Toggle "Ver Treinamentos" / "Fechar Treinamentos"
+  /* ----------------------------------------
+     7) Toggle "Ver Treinamentos"
+  ---------------------------------------- */
   document.addEventListener("click", function(event) {
     if (event.target.classList.contains("toggle-options")) {
       const button = event.target;
@@ -170,30 +204,42 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Clique em um treinamento
+  /* ----------------------------------------
+     8) Clique em um treinamento => conclui e re-render
+  ---------------------------------------- */
   document.addEventListener("click", function(event) {
     if (event.target.classList.contains("training-button")) {
       const btn = event.target;
       const trainingName = btn.getAttribute("data-training");
       const moduleTitle = btn.getAttribute("data-module");
       const link = btn.getAttribute("data-link");
-      // Marca como concluído
+
+      // Marca como concluído se não estiver salvo
       if (!completedTrainings.includes(trainingName)) {
         completedTrainings.push(trainingName);
         localStorage.setItem("completedTrainings", JSON.stringify(completedTrainings));
       }
-      // Re-renderiza para atualizar a barra de progresso e exibir "✔"
-      renderCarousel(trainingTypes, searchInput.value.toLowerCase());
+
+      // Re-renderiza com o termo de busca atual
+      const term = searchInput.value.toLowerCase();
+      renderCarousel(trainingTypes, term);
       showSlide(currentSlide);
+
+      // Atualiza a barra de progresso do módulo
       atualizarProgresso(moduleTitle);
-      // Redireciona (se o link não for "#")
+
+      // Redireciona
       setTimeout(() => {
-        if (link !== "#") window.location.href = link;
+        if (link !== "#") {
+          window.location.href = link;
+        }
       }, 200);
     }
   });
 
-  // Filtro de busca
+  /* ----------------------------------------
+     9) Filtro de busca
+  ---------------------------------------- */
   if (searchInput) {
     searchInput.addEventListener("input", function() {
       const term = this.value.toLowerCase();
@@ -202,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
 
 /* ---------------------------------------------------
    2) SEÇÃO DE FAQs (com paginação)
@@ -297,4 +344,3 @@ if (nextBtnFaq) {
     }
   });
 }
-
