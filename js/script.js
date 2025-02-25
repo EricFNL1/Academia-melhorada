@@ -30,8 +30,6 @@ document.addEventListener("DOMContentLoaded", function() {
         { name: "Quadro de Avisos", link: "quadro-de-avisos.html" },
       ],
     },
-    // Adicione mais módulos se quiser
-
     {
       title: "Comunicação",
       image: "https://img.freepik.com/free-photo/cheerful-woman-holding-sign_53876-15197.jpg",
@@ -62,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   /* ----------------------------------------
-     3) Atualiza barra de progresso
+     3) Atualiza barra de progresso do módulo
   ---------------------------------------- */
   function atualizarProgresso(moduleTitle) {
     const moduleKey = moduleTitle.replace(/\s+/g, "-").toLowerCase();
@@ -73,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const completedCount = completedTrainings.filter(tName =>
       moduleData.trainings.some(tr => tr.name === tName)
     ).length;
-
     const porcentagem = (completedCount / totalTrainings) * 100 || 0;
     const progressBar = document.getElementById(`progress-${moduleKey}`);
     if (progressBar) {
@@ -89,42 +86,48 @@ document.addEventListener("DOMContentLoaded", function() {
   function renderCarousel(modules, searchTerm = "") {
     carouselContainer.innerHTML = "";
 
-    // Filtro: busca no título do módulo e nome dos treinamentos
+    // Filtro: busca no título do módulo e nos nomes dos treinamentos
     let filtered = modules.filter(m =>
       m.title.toLowerCase().includes(searchTerm) ||
       m.trainings.some(t => t.name.toLowerCase().includes(searchTerm))
     );
-    // Se busca vazio, exibe todos
     if (searchTerm === "") {
       filtered = modules;
     }
 
-    // Exibe mensagem se não houver resultados
+    // Ordena os módulos para que os mais "incompletos" apareçam primeiro
+    filtered.sort((a, b) => {
+      const aCompleted = a.trainings.filter(t => completedTrainings.includes(t.name)).length;
+      const bCompleted = b.trainings.filter(t => completedTrainings.includes(t.name)).length;
+      const aRatio = aCompleted / a.trainings.length;
+      const bRatio = bCompleted / b.trainings.length;
+      return aRatio - bRatio;
+    });
+
     noResultsMessage.style.display = filtered.length === 0 ? "block" : "none";
 
     // Divide em grupos de 3
     const slides = chunkArray(filtered, 3);
 
     slides.forEach((group, index) => {
-      // Cria o slide => row row-cols-1 row-cols-md-3 g-3
       const slideDiv = document.createElement("div");
       slideDiv.className = "carousel-slide row row-cols-1 row-cols-md-3 g-3";
       if (index === 0) slideDiv.classList.add("active");
 
       group.forEach(module => {
-        // Filtra treinamentos do módulo para saber se ele deve abrir
-        const filteredTrainings = module.trainings.filter(t => 
-          t.name.toLowerCase().includes(searchTerm)
-        );
-        // Se há busca e encontrou algum training => abre automaticamente
-        const isExpanded = (searchTerm !== "" && filteredTrainings.length > 0);
+        // Reordena os treinamentos do módulo para que os não assistidos fiquem primeiro
+        const sortedTrainings = module.trainings.slice().sort((t1, t2) => {
+          const t1Completed = completedTrainings.includes(t1.name);
+          const t2Completed = completedTrainings.includes(t2.name);
+          return (t1Completed === t2Completed) ? 0 : t1Completed ? 1 : -1;
+        });
 
-        // Cria a coluna
+        // Se houver busca e algum treinamento corresponder, abre automaticamente
+        const isExpanded = (searchTerm !== "" && module.trainings.some(t => t.name.toLowerCase().includes(searchTerm)));
+
         const col = document.createElement("div");
         col.className = "col";
-        
 
-        // Monta o card do módulo
         let cardHTML = `
           <div class="course-card flex-grow-1">
             <img src="${module.image}" alt="${module.title}" class="card-img-top training-image">
@@ -143,8 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
               <div class="training-options mt-3 scrollable-list" style="display: ${isExpanded ? "block" : "none"};">
         `;
 
-        // Lista de treinamentos
-        module.trainings.forEach(t => {
+        sortedTrainings.forEach(t => {
           const isCompleted = completedTrainings.includes(t.name);
           cardHTML += `
             <button class="btn ${isCompleted ? "btn-success" : "btn-outline-primary"} btn-sm btn-block mb-2 training-button"
@@ -167,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
       carouselContainer.appendChild(slideDiv);
     });
 
-    // Após renderizar, atualiza a barra de progresso de todos os módulos
+    // Atualiza as barras de progresso
     trainingTypes.forEach(m => atualizarProgresso(m.title));
   }
 
@@ -177,10 +179,8 @@ document.addEventListener("DOMContentLoaded", function() {
   function showSlide(index) {
     const slides = document.querySelectorAll(".carousel-slide");
     if (slides.length === 0) return;
-
     if (index < 0) index = slides.length - 1;
     if (index >= slides.length) index = 0;
-
     slides.forEach((slide, i) => {
       slide.classList.toggle("active", i === index);
       slide.style.display = i === index ? "flex" : "none";
@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // Atualiza a barra de progresso do módulo
       atualizarProgresso(moduleTitle);
 
-      // Redireciona
+      // Redireciona se necessário
       setTimeout(() => {
         if (link !== "#") {
           window.location.href = link;
@@ -258,13 +258,11 @@ document.addEventListener("DOMContentLoaded", function() {
   if (searchInput) {
     searchInput.addEventListener("input", function() {
       const term = this.value.toLowerCase();
-      // Filtro do carousel
       renderCarousel(trainingTypes, term);
       showSlide(0);
-      // Filtro de FAQs
       filterFAQs(term);
 
-      // SE O USUÁRIO LIMPAR A BUSCA => FECHA TUDO
+      // Se o campo de busca for limpo, fecha os treinamentos e FAQs abertos
       if (term === "") {
         closeAllTrainings();
         closeAllFAQs();
@@ -274,11 +272,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Fecha todos os treinamentos (helper)
   function closeAllTrainings() {
-    // Fecha todas as .training-options
     document.querySelectorAll(".training-options").forEach(opt => {
       opt.style.display = "none";
     });
-    // Volta todos os botões para "Ver Treinamentos"
     document.querySelectorAll(".toggle-options").forEach(btn => {
       btn.textContent = "Ver Treinamentos";
     });
@@ -308,7 +304,7 @@ function renderFAQs(page = 1, filteredFAQs = faqItems) {
 
 function renderPagination(filteredFAQs, currentPage) {
   const paginationContainer = document.getElementById("pagination-numbers");
-  if (!paginationContainer) return; // se não existir
+  if (!paginationContainer) return;
   paginationContainer.innerHTML = "";
   const totalPages = Math.ceil(filteredFAQs.length / itemsPerPage);
   for (let i = 1; i <= totalPages; i++) {
@@ -321,14 +317,12 @@ function renderPagination(filteredFAQs, currentPage) {
     });
     paginationContainer.appendChild(btn);
   }
-  // Se existirem os botões "prev-btn-faq" e "next-btn-faq", atualiza
   const prevFaqBtn = document.getElementById("prev-btn-faq");
   const nextFaqBtn = document.getElementById("next-btn-faq");
   if (prevFaqBtn) prevFaqBtn.disabled = currentPage === 1;
   if (nextFaqBtn) nextFaqBtn.disabled = currentPage === totalPages;
 }
 
-// Clique para abrir/fechar FAQ (caso não seja filtrada)
 faqItems.forEach(item => {
   const question = item.querySelector(".faq-question");
   const answer = item.querySelector(".faq-answer");
@@ -338,17 +332,11 @@ faqItems.forEach(item => {
   });
 });
 
-/* 
-   filterFAQs(searchTerm):
-   - Abre automaticamente as FAQs que baterem com a busca
-   - Exibe a resposta (style.display = "block")
-*/
 function filterFAQs(searchTerm) {
   const filtered = faqItems.filter(item => {
     const q = item.querySelector(".faq-question").textContent.toLowerCase();
     const a = item.querySelector(".faq-answer").textContent.toLowerCase();
     const match = q.includes(searchTerm) || a.includes(searchTerm);
-    // Abre a FAQ se der match
     item.classList.toggle("open", match);
     item.querySelector(".faq-answer").style.display = match ? "block" : "none";
     return match;
@@ -364,10 +352,8 @@ function closeAllFAQs() {
   });
 }
 
-// Renderiza as FAQs inicialmente
 renderFAQs();
 
-// Botões de navegação de FAQ (se existirem)
 const prevBtnFaq = document.getElementById("prev-btn-faq");
 const nextBtnFaq = document.getElementById("next-btn-faq");
 if (prevBtnFaq) {
